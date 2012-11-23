@@ -44,6 +44,7 @@ tuple * A;
    left=right;                                           //egine gia na mi xasw tis allages pou ekana sto right pio prin
    right=A[i];
    
+   
    // upologismos endiamesou diastimatos kai poso prepei na epekta8ei.
  }
  printf ("%lld %lld\n",max_met_neg,right.kiosks);
