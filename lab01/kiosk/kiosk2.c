@@ -20,11 +20,12 @@ tuple * A;
  
  A=malloc(sizeof(tuple)*N);
  for (i=0; i<N; i++) {
-   var1=fscanf(fp,"%lld",&var1);
-   var2=fscanf(fp,"%lld",&var2);
+   fscanf(fp,"%lld",&var1);
+   fscanf(fp,"%lld",&var2);
+  
    A[i].position=var1;
-   A[i].kiosks=var2;
-
+   A[i].kiosks=var2;   //loaded elements on array A
+  
  };
  
 free(A);
