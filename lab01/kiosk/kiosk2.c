@@ -10,8 +10,8 @@ typedef struct {
 
 FILE * fp;
 int i;
-long int left,right;
 long long int N, dist, var1,var2,met_pos, met_neg, max_met_pos, max_met_neg; //to right stelnei aristera to left deksia.
+tuple right,left;
 tuple * A;
 
  fp=fopen(argv[1],"r");
@@ -31,7 +31,7 @@ tuple * A;
  right=A[0];
  if (right.kiosks%2==0) {                                  //upologise artia kioskia
    right.kiosks=right.kiosks/2;                           //upologizontai  posa 8a pane aristera kai posa 8a meinoun 
-   max_left=-((right.kiosks-1)*dist+(dist/2));            // megisti apostasi gia aristera.                
+   max_met_neg=-((right.kiosks-1)*dist+(dist/2));            // megisti apostasi gia aristera.                
  } else {                                                 // gia peritta
  };
                                                   
@@ -40,7 +40,7 @@ tuple * A;
    left =A[i-1];
    // kane diadikasia xwrismatos
  }
- print ("%lld %lld\n",max_left,right.kiosks);
+ printf ("%lld %lld\n",max_met_neg,right.kiosks);
 free(A);
 fclose(fp);
 return 0;
