@@ -30,8 +30,8 @@ tuple * A;
 
  right=A[0];
  if (right.kiosks%2==0) {                                  //upologise artia kioskia
-   right.kiosks=right.kiosks/2;                           //upologizontai  posa 8a pane aristera kai posa 8a meinoun 
-   max_met_neg=-((right.kiosks-1)*dist+(dist/2));            // megisti apostasi gia aristera.                
+   right.kiosks=right.kiosks/2;                           //upologizontai  posa 8a pane aristera kai posa 8a meinoun. Gi afta pou 8a meinoun na                                                           //  8umamai oti exoun prokupsei apo artio pli8os 
+   max_met_neg=-((right.kiosks-1)*dist+(dist/2));         // megisti apostasi gia aristera.                
  } else {                                                 // gia peritta
  };
                                                   
