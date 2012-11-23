@@ -35,12 +35,15 @@ tuple * A;
    flag=1;                                                //  8umamai oti exoun prokupsei apo artio pli8os mesw tou flag 
    max_met_neg=-((right.kiosks-1)*dist+(dist/2));         // megisti apostasi gia aristera.                
  } else {                                                 // gia peritta
- };
+   flag=0;
+   right.kiosks=right.kiosks/2 + 1;
+   max_met_neg=-((right.kiosks-1)*dist);  
+ };                                                      //teleiwsa me prwto stoixeio.
                                                   
  for (i=1; i<N; i++) {
    right=A[i];
    left =A[i-1];
-   // kane diadikasia xwrismatos
+   // upologismos endiamesou diastimatos kai poso prepei na epekta8ei.
  }
  printf ("%lld %lld\n",max_met_neg,right.kiosks);
 free(A);
