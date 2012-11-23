@@ -9,8 +9,9 @@ typedef struct {
 } tuple ;
 
 FILE * fp;
+int i;
 long int left,right;
-long long int N, dist;
+long long int N, dist, var1,var2;
 tuple * A;
 
  fp=fopen(argv[1],"r");
@@ -18,7 +19,13 @@ tuple * A;
  fscanf(fp,"%lld", &dist);    //  find min distance between kiosks.
  
  A=malloc(sizeof(tuple)*N);
+ for (i=0; i<N; i++) {
+   var1=fscanf(fp,"%lld",&var1);
+   var2=fscanf(fp,"%lld",&var2);
+   A[i].position=var1;
+   A[i].kiosks=var2;
 
+ };
  
 free(A);
 fclose(fp);
