@@ -11,7 +11,7 @@ typedef struct {
 
 FILE * fp;
 int i,flag;
-long long int N, dist, var1,var2,met_pos, met_neg, max_met_pos, max_met_neg,gap,flag_left,flag_right; //right stelnei aristera to left deksia.
+long long int N, dist, var1,var2,max_met_pos, max_met_neg,gap,flag_left,flag_right, kiosks_to_move; //right stelnei aristera to left deksia.
 tuple right,left;
 tuple * A;
  
@@ -46,6 +46,7 @@ tuple * A;
  //prepei na arxikopoiisw tis metavlites metakinisis !
  for (i=1; i<N; i++) {
    //prepei na prosthetw tis metakiniseis arxika 8a einai miden.
+   kiosks_to_move=0;
    flag_left=flag_right;                                 //allazw ta flags
    left=right;                                           //egine gia na mi xasw tis allages pou ekana sto right pio prin
    right=A[i];
@@ -57,20 +58,28 @@ tuple * A;
 
    if ((flag_left==1)&&(flag_right==1)) {       
      right.kiosks=right.kiosks/2;
+     var1=right.position-left.position;                   //existing distance
      gap=(right.position-1)-(left.position+1);           // prepei na afairesw ta 2 stoixeia pou einai sta akra.
-     var1=(gap/dist)-1;                                  // kiosks fitting in the gap 
+     var2=(gap/dist)-1;                                  // kiosks fitting in the gap 
+     kiosks_to_move = left.kiosks + right.kiosks;      //  posa kioskia 8a metakinisw ap tis arxikes tous 8eseis.. 
    } else if ((flag_left==0)&&(flag_right==0)) {
      right.kiosks= (right.kiosks/2) +1;
+     var1=right.position-left.position;
      gap=right.position-left.position;
-     var1=(gap/dist)-1;    
+     var2=(gap/dist)-1;
+     kiosks_to_move=left.kiosks-1 + right.kiosks-1;    
    } else if ((flag_left==1)&&(flag_right==0)) {
      right.kiosks=(right.kiosks/2)+1;
+     var1=right.position-left.position;
      gap=right.position-(left.position+1);
-     var1=(gap/dist)-1;     
+     var2=(gap/dist)-1;     
+     kiosks_to_move= left.kiosks + right.kiosks-1;
    } else if ((flag_left==0)&&(flag_right==1)) {
      right.kiosks=right.kiosks/2;
+     var1=right.position - left.position;
      gap=(right.position-1)-left.position;
-     var1=(gap/dist)-1;
+     var2=(gap/dist)-1;
+     kiosks_to_move= left.kiosks-1 + right.kiosks;
    };
    
  }
