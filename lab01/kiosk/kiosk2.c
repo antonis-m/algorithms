@@ -64,9 +64,13 @@ tuple * A;
      gap=right.position-left.position;
      var1=(gap/dist)-1;    
    } else if ((flag_left==1)&&(flag_right==0)) {
-     
+     right.kiosks=(right.kiosks/2)+1;
+     gap=right.position-(left.position+1);
+     var1=(gap/dist)-1;     
    } else if ((flag_left==0)&&(flag_right==1)) {
-   
+     right.kiosks=right.kiosks/2;
+     gap=(right.position-1)-left.position;
+     var1=(gap/dist)-1;
    };
    
  }
