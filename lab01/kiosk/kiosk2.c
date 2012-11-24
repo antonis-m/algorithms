@@ -142,14 +142,13 @@ tuple * A;
        shift_neg += -var2;
        max_met_pos +=var2;
        max_met_neg -=var2;              
-       met_pos=-var2+(left.kiosks-1)*dist; 
+       met_pos=-var2+(left.kiosks-1)*dist +dist/2.0; 
        if (met_pos>max_met_pos)
          max_met_pos=met_pos; 
-       met_neg=var2-((right.kiosks-1)*dist + dist/2.0); // edw eixe shift p anti gia var2
+       met_neg=var2-(right.kiosks-1)*dist; // edw eixe shift p anti gia var2
        if (abs(met_neg)>abs(max_met_neg))
          max_met_neg=met_neg;       
-
-
+     
      }
    } else if ((flag_left==0)&&(flag_right==1)) {
      
