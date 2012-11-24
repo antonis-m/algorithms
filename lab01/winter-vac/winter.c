@@ -3,7 +3,7 @@
 
 int main(int argc,char **argv) {
 FILE * fp;
-long int i;
+int i;
 long long int N,c,B,k,x,y;
 long long int * A;
 long long int * C;
@@ -14,9 +14,9 @@ fp=fopen(argv[1],"r");
 fscanf(fp, "%lld", &N);
 fscanf(fp, "%lld", &c);
 
-A=malloc(sizeof(long long int) * N+1);    
-C=malloc(sizeof(long long int) * N+1);
-M=malloc(sizeof(long long int) * N+1);
+A=malloc(sizeof(long long int) *(N+1));    
+C=malloc(sizeof(long long int) *(N+1));
+M=malloc(sizeof(long long int) *(N+1));
 
 for(i=1 ; i <= N ; i++) {  
   fscanf(fp,"%lld",&B);
@@ -49,7 +49,7 @@ printf("%lld \n",y-x+1);
 
 fclose(fp);
 free(A);
-free(C);
 free(M);
+free(C);
 return 0;
 }
