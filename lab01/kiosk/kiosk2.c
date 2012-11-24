@@ -13,7 +13,7 @@ FILE * fp;
 int i,flag_left,flag_right;
 long long int N, dist, var1,kiosks_to_move;
 long long int kiosks_to_move_left, kiosks_to_move_right, space_needed; //right stelnei aristera to left deksia.
-double var2,shift_p,shift_neg,max_met_pos,max_met_neg,met_pos,met_neg;
+long double var2,shift_p,shift_neg,max_met_pos,max_met_neg,met_pos,met_neg;
 tuple right,left;
 tuple * A;
  
@@ -43,7 +43,7 @@ tuple * A;
  };                                                      //teleiwsa me prwto stoixeio.
  
  
- max_met_pos=max_met_neg=0.0;
+// max_met_pos=max_met_neg=0.0;
  shift_p=shift_neg=0.0; 
  var2=0.0;
  for (i=1; i<N; i++) {
@@ -158,12 +158,34 @@ tuple * A;
      kiosks_to_move_right =left.kiosks-1; 
      kiosks_to_move_left= right.kiosks;
      space_needed= (left.kiosks-1)*dist + dist + (right.kiosks-1)*dist + (dist/2); 
-   };
+     if (var1>=space_needed) {                           // pithanws kati na xreiastei na peiraxtei gia diastimata pou prepei na mikrunoun.
+       met_pos+=(left.kiosks-1)*dist ;
+        if (met_pos>max_met_pos)
+          max_met_pos=met_pos; 
+        met_neg=-((right.kiosks-1)*dist - dist/2.0) ;
+        if (abs(met_neg)>abs(max_met_neg))
+          max_met_neg=met_neg;       
+     } else { 
+
+       var2=(space_needed -var1)/2.0;                    // isotimo anoigma deksia kai aristera.
+       shift_p += var2;
+       shift_neg += -var2;
+       max_met_pos +=var2;
+       max_met_neg -=var2;              
+       met_pos=-var2+(left.kiosks-1)*dist; 
+       if (met_pos>max_met_pos)
+         max_met_pos=met_pos; 
+       met_neg=var2-((right.kiosks-1)*dist +dist/2.0); // edw eixe shift p anti gia var2
+       if (abs(met_neg)>abs(max_met_neg))
+         max_met_neg=met_neg;       
+     
+     }
+ };
    
  }
-      printf("%lf %lf %lf %lf\n",met_pos,met_neg,max_met_pos,max_met_neg);
+     
 
-//printf("%lf %lf \n", max_met_pos,max_met_neg);
+printf("%Lf %Lf \n", max_met_pos,max_met_neg);
 free(A);
 fclose(fp);
 return 0;
