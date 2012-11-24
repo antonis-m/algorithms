@@ -11,7 +11,9 @@ typedef struct {
 
 FILE * fp;
 int i,flag_left,flag_right;
-long long int N, dist, var1,var2,max_met_pos, max_met_neg,gap,kiosks_to_move, kiosks_to_move_left, kiosks_to_move_right, space_needed; //right stelnei aristera to left deksia.
+long long int N, dist, var1,max_met_pos, max_met_neg,kiosks_to_move,shift_p, shift_neg;
+long long int kiosks_to_move_left, kiosks_to_move_right, space_needed, met_pos,met_neg; //right stelnei aristera to left deksia.
+double var2;
 tuple right,left;
 tuple * A;
  
@@ -39,7 +41,8 @@ tuple * A;
    right.kiosks=right.kiosks/2 + 1;
    max_met_neg=-((right.kiosks-1)*dist);  
  };                                                      //teleiwsa me prwto stoixeio.
-
+ 
+ max_met_pos=0;
  //prepei na arxikopoiisw tis metavlites metakinisis !
  for (i=1; i<N; i++) {
    //prepei na prosthetw tis metakiniseis arxika 8a einai miden.
@@ -61,7 +64,19 @@ tuple * A;
      kiosks_to_move_right  = left.kiosks;
      kiosks_to_move_left   = right.kiosks;  
      space_needed= (left.kiosks-1)*dist + (right.kiosks-1)*dist + 2*(dist/2) +dist; 
- 
+     if (var1>=space_needed) {                           // pithanws kati na xreiastei na peiraxtei gia diastimata pou prepei na mikrunoun.
+        met_pos=(left.kiosks-1)*dist + dist/2;
+        if (met_pos>max_met_pos)
+          max_met_pos=met_pos; 
+        met_neg=-((right.kiosks-1)*dist + dist/2);
+        if (abs(met_neg)>abs(max_met_neg))
+          max_met_neg=met_neg;       
+     } else { 
+       var2=(space_needed - var1)/2;                    // isotimo anoigma deksia kai aristera.
+       shift_p=var2;
+       shift_neg=-var2;
+     };
+  
    } else if ((flag_left==0)&&(flag_right==0)) {
      
      right.kiosks= (right.kiosks/2) +1;
@@ -85,10 +100,14 @@ tuple * A;
      right.kiosks=right.kiosks/2;
      var1=right.position - left.position;
      kiosks_to_move= left.kiosks-1 + right.kiosks;
+     kiosks_to_move_right =left.kiosks-1; 
+     kiosks_to_move_left= right.kiosks;
+     space_needed= (left.kiosks-1)*dist + dist + (right.kiosks-1)*dist + (dist/2); 
    };
    
  }
 
+printf("%lld %lld \n", max_met_pos,max_met_neg);
 free(A);
 fclose(fp);
 return 0;
