@@ -51,14 +51,14 @@ tuple * A;
    kiosks_to_move=0;
    flag_left=flag_right;                                 //allazw ta flags
    left=right;                                           //egine gia na mi xasw tis allages pou ekana sto right pio prin
-   left.position +=var2;  //+=var2    //paratirw oti mono to left xreiazetai na kanw shift..
+   left.position +=var2;  //+=var2   // //paratirw oti mono to left xreiazetai na kanw shift..
    right=A[i];
-   
+   right.position +=shift_p; 
    if (right.kiosks%2 == 0)   
      flag_right=1; 
    else if (right.kiosks/2==1)
      flag_right=0;
-  
+   printf("%Lf %Lf \n",left.position,right.position);  
 
    if ((flag_left==1)&&(flag_right==1)) {       
      
@@ -75,9 +75,9 @@ tuple * A;
      } else { 
 
        var2=(space_needed -var1)/2.0;                    // isotimo anoigma deksia kai aristera.
-      // shift_p += var2;
+       shift_p += var2;
+       max_met_pos -=var2;
       // shift_neg += -var2;
-     //  max_met_pos -=var2;                               // allaksa + me - sto max met pos
        max_met_neg -=var2;              
        met_pos=-var2+(left.kiosks-1)*dist + dist/2.0; //
        if (met_pos>max_met_pos)
@@ -102,9 +102,9 @@ tuple * A;
      } else { 
 
        var2=(space_needed -var1)/2.0;                    // isotimo anoigma deksia kai aristera.
-      // shift_p += var2;
+       shift_p += var2;
+       max_met_pos -=var2;
       // shift_neg += -var2;
-      // max_met_pos -=var2;
        max_met_neg -=var2;              
        met_pos=-var2+(left.kiosks-1)*dist; 
        if (met_pos>max_met_pos)
@@ -129,9 +129,9 @@ tuple * A;
      } else { 
 
        var2=(space_needed -var1)/2.0;                    // isotimo anoigma deksia kai aristera.
-      // shift_p += var2;
+       shift_p += var2;
+       max_met_pos -=var2;
       // shift_neg += -var2;
-      // max_met_pos -=var2;
        max_met_neg -=var2;              
        met_pos=-var2+(left.kiosks-1)*dist +dist/2.0; 
        if (met_pos>max_met_pos)
@@ -156,9 +156,9 @@ tuple * A;
      } else { 
 
        var2=(space_needed -var1)/2.0;                    // isotimo anoigma deksia kai aristera.
-      // shift_p += var2;
+       shift_p += var2;
+       max_met_pos -=var2;
       // shift_neg += -var2;
-      // max_met_pos -=var2 ; // edw exw kapoia aporia.
        max_met_neg -=var2;              
        met_pos=-var2+(left.kiosks-1)*dist; 
        if (met_pos>max_met_pos)
@@ -169,14 +169,15 @@ tuple * A;
      
      }
  };
-printf("%Lf %Lf \n", max_met_pos,max_met_neg);
+//printf("%Lf %Lf \n", max_met_pos,max_met_neg);
    
  }
-     
+ 
 
 left=right;          // prepei na upologistei i metakinisi gia to teleftaio stoixeio.
-left.position=var2;  // na 8umithw meta sto debugging na allaksw me shift pos
-met_pos=var2;
+left.position=var2;  
+right.position += shift_p;
+//met_pos=var2;
 flag_left=flag_right;
 if (flag_left==1) {
 met_pos+= (left.kiosks-1)*dist + dist/2.0;
@@ -185,7 +186,6 @@ met_pos +=(left.kiosks)*dist;
 };
 if (met_pos>max_met_pos)
   max_met_pos=met_pos; 
-
 
 printf("%Lf %Lf \n", max_met_pos,max_met_neg);
 free(A);
