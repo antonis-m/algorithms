@@ -11,8 +11,7 @@ typedef struct {
 
 FILE * fp;
 int i,flag_left,flag_right;
-long double N, dist, var1,kiosks_to_move;
-long double kiosks_to_move_left, kiosks_to_move_right; //right stelnei aristera to left deksia.
+long double N, dist, var1;
 long double var2,shift_p,shift_neg,max_met_pos,max_met_neg,met_pos,met_neg,space_needed;
 tuple right,left;
 tuple * A;
@@ -47,18 +46,16 @@ tuple * A;
  shift_p=shift_neg=0.0; 
  var2=0.0;
  for (i=1; i<N; i++) {
-   met_pos = var2;           // check meta giati mono to aristero kineitai. ara to deksi den epireazetai. provlimatizomai metaksu shift_ var2
-   kiosks_to_move=0;
+  met_pos = shift_p;  ///   // check meta giati mono to aristero kineitai. ara to deksi den epireazetai. provlimatizomai metaksu shift_ var2
    flag_left=flag_right;                                 //allazw ta flags
    left=right;                                           //egine gia na mi xasw tis allages pou ekana sto right pio prin
-   left.position +=var2;  //+=var2   // //paratirw oti mono to left xreiazetai na kanw shift..
+   left.position +=var2;                                 //paratirw oti mono to left xreiazetai na kanw shift..
    right=A[i];
    right.position +=shift_p; 
    if (right.kiosks%2 == 0)   
      flag_right=1; 
    else if (right.kiosks/2==1)
-     flag_right=0;
-   printf("%Lf %Lf \n",left.position,right.position);  
+     flag_right=0; 
 
    if ((flag_left==1)&&(flag_right==1)) {       
      
@@ -79,7 +76,7 @@ tuple * A;
        max_met_pos -=var2;
       // shift_neg += -var2;
        max_met_neg -=var2;              
-       met_pos=-var2+(left.kiosks-1)*dist + dist/2.0; //
+       met_pos=-var2+(left.kiosks-1)*dist + dist/2.0; 
        if (met_pos>max_met_pos)
          max_met_pos=met_pos; 
        met_neg=var2-((right.kiosks-1)*dist + dist/2.0); //edw eixe shiftp anti gia var2
@@ -169,25 +166,29 @@ tuple * A;
      
      }
  };
-//printf("%Lf %Lf \n", max_met_pos,max_met_neg);
+printf("%Lf %Lf. posleft : %Lf , posright : %Lf flag_left: %d flag_right: %d \n", max_met_pos,max_met_neg, left.position, right.position,flag_left,flag_right);
    
+       max_met_pos -=var2;
  }
  
 
 left=right;          // prepei na upologistei i metakinisi gia to teleftaio stoixeio.
-left.position=var2;  
-right.position += shift_p;
-//met_pos=var2;
+left.position+=var2;  
 flag_left=flag_right;
 if (flag_left==1) {
-met_pos+= (left.kiosks-1)*dist + dist/2.0;
+  met_pos+= (left.kiosks-1)*dist + dist/2.0;
 } else {
-met_pos +=(left.kiosks)*dist;
+  met_pos +=(left.kiosks)*dist;
 };
 if (met_pos>max_met_pos)
   max_met_pos=met_pos; 
+printf("%Lf %Lf \n", shift_p, left.position);
 
-printf("%Lf %Lf \n", max_met_pos,max_met_neg);
+if (max_met_pos > -(max_met_neg))
+  printf("%Lf \n", max_met_pos);
+else 
+  printf("%Lf \n", -(max_met_neg));
+
 free(A);
 fclose(fp);
 return 0;
