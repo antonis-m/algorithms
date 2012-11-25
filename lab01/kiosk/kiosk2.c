@@ -169,6 +169,7 @@ tuple * A;
      
      }
  };
+printf("%Lf %Lf \n", max_met_pos,max_met_neg);
    
  }
      
