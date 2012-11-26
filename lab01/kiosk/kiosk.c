@@ -3,7 +3,7 @@
 
 int main(int argc,char **argv) {
 FILE * fp;
-long int left, right;
+long int left, right,i;
 long long int N,dist, kiosk_sum, kiosks, pos, pos_0, pos_N, fin_dist, init_dist, interm;
 double res;
 long long int * A;
