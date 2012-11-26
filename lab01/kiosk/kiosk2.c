@@ -39,6 +39,7 @@ tuple * A;
    flag_right=0;
    right.kiosks=right.kiosks/2 + 1;
    max_met_neg=-((right.kiosks-1)*dist);  
+  ///////// printf(max_met_dist)
  };                                                      //teleiwsa me prwto stoixeio.
  
  
@@ -46,7 +47,7 @@ tuple * A;
  shift_p=shift_neg=0.0; 
  var2=0.0;
  for (i=1; i<N; i++) {
-//   printf(" %d, %Lf \n",i, var2);
+   printf(" %Lf \n", shift_p);
    met_pos = shift_p;  ///   // check meta giati mono to aristero kineitai. ara to deksi den epireazetai. provlimatizomai metaksu shift_ var2
    met_neg = shift_p;  //////
    flag_left=flag_right;                                 //allazw ta flags
