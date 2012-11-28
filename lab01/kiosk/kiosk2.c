@@ -11,7 +11,7 @@ typedef struct {
 
 FILE * fp;
 int i,flag_left,flag_right;
-long double N, dist, var1;
+long double N, dist, var1,temp;
 long double var2,shift_p,shift_neg,max_met_pos,max_met_neg,met_pos,met_neg,space_needed;
 tuple right,left;
 tuple * A;
@@ -35,11 +35,12 @@ tuple * A;
    right.kiosks=right.kiosks/2;                           //upologizontai  posa 8a pane aristera kai posa 8a meinoun. Gi afta pou 8a meinoun na
    flag_right=1;                                                //  8umamai oti exoun prokupsei apo artio pli8os mesw tou flag 
    max_met_neg=-((right.kiosks-1)*dist+(dist/2));         // megisti apostasi gia aristera.                
- } else {                                                 // gia peritta
+ } else if (right.kiosks%2==1) {                                                 // gia peritta
    flag_right=0;
    right.kiosks=right.kiosks/2 + 1;
-   max_met_neg=-((right.kiosks-1)*dist);  
-  ///////// printf(max_met_dist)
+   temp=right.kiosks-1.0;
+   max_met_neg=-(temp*dist);  
+   printf("%lld %Lf   %Lf 1111\n ",(temp), dist, max_met_neg);
  };                                                      //teleiwsa me prwto stoixeio.
  
  

@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char **argv) {
+
+typedef struct {
+  long double position;
+  long long int kiosks;
+} tuple ;
+
+FILE *fp;
+fp=fopen(argv[1],"r");
+int i;
+long long int prev_pos,pos,pos_0,apps,dist,kiosks,max_kiosks,sum_kiosks,x,y,k;
+long long int * C;
+long long int * M;
+tuple * A;
+
+fscanf(fp, "%lld",&apps);
+fscanf(fp, "%lld",&dist);
+
+C=malloc(sizeof(long long int)*(apps+1));
+M=malloc(sizeof(long long int)*(apps+1));
+A=malloc(sizeof(tuple)*(apps+1));
+
+max_kiosks=0;
+M[0]=C[0]=0;
+x=y=k=sum_kiosks=0;
+fscanf(fp,"%lld",&pos_0);
+fclose(fp);
+fp=fopen(argv[1],"r");
+fscanf(fp,"%lld",&pos);
+fscanf(fp,"%lld",&pos);
+
+
+for(i=1; i<=apps; i++) {
+  fscanf(fp,"%lld",&pos);
+  fscanf(fp,"%lld",&kiosks);
+  A[i].position=pos;
+  A[i].kiosks=kiosks; 
+   
+  if (kiosks>max_kiosks)
+    max_kiosks=kiosks;
+  
+  C[i] = (sum_kiosks-1)*dist +(kiosks-1)*dist/2 - pos + pos_0; 
+  sum_kiosks+=kiosks; 
+  //C[i]=C[i-1] + kiosks -pos/dist + prev_pos/dist;  /*edw prepei na mpoun ta olika kioskia mexri twra*/
+                                                                                //printf("%d %lld %lld \n",i,C[i],k);
+  prev_pos=pos;
+}
+
+for(i=1;i<=apps; i++) {
+  
+  //C[i]= C[i] -1 + (pos_0/dist) ;
+  printf("%d %lld \n",i, C[i]);
+  if (C[i-1]<C[M[i-1]])    
+    M[i]=i-1; //printf("M[i] %lld \n",M[i]);}
+  else 
+    M[i]=M[i-1];
+
+  k=i-y+x;//-1;
+  while (k>0) {
+    if ((C[i] - C[M[k]]) >=0 )                        
+      k=M[k];                                                    //printf("%lld %lld \n",C[i],C[M[k]]);}
+    else 
+      break;
+    x=k+1;
+    y=i;
+  }  
+}
+ printf("%lld %lld\n",x,y);
+
+
+fclose(fp);
+free(C);
+free(M);
+free(A);
+return 0;
+}

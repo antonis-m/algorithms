@@ -62,11 +62,11 @@ for (i=1; i<N; i++) {
   
   } else if (mmove<0) {
 
-      mmove=abs(p_right+dist-left);
+      mmove=(p_right+dist-left);
       //printf("%Lf \n", mmove);
       interm=(res- offset_left);
       if (mmove<interm) 
-       right-=mmove; 
+       right+=mmove; 
       else right-= interm;
       
   }
