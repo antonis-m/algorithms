@@ -9,17 +9,17 @@ long long int * A;
 long long int * C;
 long long int * M;
 
-fp=fopen(argv[1],"r");
+//fp=fopen(argv[1],"r");
 
-fscanf(fp, "%lld", &N);
-fscanf(fp, "%lld", &c);
+scanf( "%lld", &N);
+scanf( "%lld", &c);
 
 A=malloc(sizeof(long long int) *(N+1));    
 C=malloc(sizeof(long long int) *(N+1));
 M=malloc(sizeof(long long int) *(N+1));
 
 for(i=1 ; i <= N ; i++) {  
-  fscanf(fp,"%lld",&B);
+  scanf("%lld",&B);
   A[i] = B - c ; 
 }
 
@@ -47,7 +47,7 @@ for (i=1; i<=N; i++) {
 printf("%lld \n",y-x+1);
 
 
-fclose(fp);
+//fclose(fp);
 free(A);
 free(M);
 free(C);
