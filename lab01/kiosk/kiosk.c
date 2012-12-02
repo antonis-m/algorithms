@@ -4,7 +4,7 @@
 
 int main(int argc,char **argv) {
 FILE * fp;
-long int i;
+long long int i;
 long long int N,pos,dist,kiosks;
 long double backtrack,offset, offset_left, offset_right, res, right,left,p_right,max_met,mmove,interm;
 long long int * A;
@@ -50,7 +50,7 @@ for (i=1; i<N; i++) {
         res = interm/2.0 +res;  
       right=right+res-offset_left;
       //backtrack+= (res-offset_left)/2.0;
-    //  printf("%ld, %Lf 1\n",i,res);
+//      printf("%lld, %Lf 1\n",i,res);
    }  else {
         if(res>offset_left) 
           res=res;
@@ -58,22 +58,21 @@ for (i=1; i<N; i++) {
           res= offset_left;
         right+=mmove;
         //backtrack+=mmove/2.0;
-      //  printf("%ld, %Lf 2\n",i,res);
+//        printf("%lld, %Lf 2\n",i,res);
     } 
   
   } else if (mmove<0) {
 
-      mmove=abs(p_right+dist-left);
+      mmove=fabs(p_right+dist-left);
       //printf("%Lf \n", mmove);
       interm=(res- offset_left);
       if (mmove<interm) 
        right-=mmove; 
       else right-= interm;
-     // printf("%ld, %Lf 3\n", i,res);
+//      printf("%lld, %Lf 3\n", i,res);
   }
  
 };
-
 printf("%.2Lf\n", res);
 return 0;
 }
