@@ -21,6 +21,11 @@ for (i=0; i<N; i++){
 }
 
 
+//quicksort sta dep
+//check for common departure point
+//evresi megistis koinis upakolou8ias.
+
+
 free(array);
 return 0;
 }
