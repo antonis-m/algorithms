@@ -11,10 +11,12 @@ void swap (diad *x, diad *y);
 long long int ch_pivot (long long int i, long long int j);
 void quicksort_dep (diad array[], long long int m, long long int n);
 void quicksort_arr (diad array[], long long int m, long long int n);
+long long int LIS (long long int array[], long long int N);
 
 int main() {
-long long int N,i,j;
+long long int N,i,j,result;
 diad * array;
+long long int * list_arr;
 
 
 scanf( "%lld", &N);
@@ -39,11 +41,20 @@ while (i != (N-1)) {
        } else
     		i=j;
 }
+
+list_arr=malloc(sizeof(long long int)*N);
+for (i=0; i<N; i++)
+    list_arr[i]=array[i].arr;
+
+
 //evresi megistis koinis upakolou8ias.
+result=LIS(list_arr, N);
+
 for (i=0;i<N;i++)
-    printf("%lld %lld \n", array[i].dep, array[i].arr);
+    printf("%lld \n", list_arr[i]);
 
 free(array);
+free(list_arr);
 return 0;
 }
 
@@ -113,3 +124,7 @@ long long int key,i,j,k;
    }
 }
 
+long long int LIS (long long int array[], long long int N) {
+
+
+}
