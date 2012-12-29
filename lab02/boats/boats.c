@@ -9,7 +9,8 @@ typedef struct {
 
 void swap (diad *x, diad *y);
 long long int ch_pivot (long long int i, long long int j);
-void quicksort_dep (diad array[] ,long long int m, long long int n);
+void quicksort_dep (diad array[], long long int m, long long int n);
+void quicksort_arr (diad array[], long long int m, long long int n);
 
 int main() {
 long long int N,i;
@@ -48,7 +49,7 @@ long long int ch_pivot (long long int i, long long int j) {
     return (i+j)/2;
 }
 
-void quicksort_dep (diad list[], long long int m, long long int n){
+void quicksort_dep (diad list[], long long int m, long long int n) {
 long long int key,i,j,k;
    if( m < n)
    {
@@ -75,4 +76,30 @@ long long int key,i,j,k;
    }
 }
 
+void quicksort_arr (diad list[], long long int m, long long int n) {
+long long int key,i,j,k;
+   if( m < n)
+   {
+      k = ch_pivot(m,n);
+      swap(&list[m],&list[k]);
+      key = list[m].arr;
+      i = m+1;
+      j = n;
+      while(i <= j)
+      {
+         while((i <= n) && (list[i].arr <= key))
+                i++;
+         while((j >= m) && (list[j].arr > key))
+                j--;
+        if( i < j)
+                swap(&list[i],&list[j]);
+      }
+      // swap two elements
+      swap(&list[m],&list[j]);
+      // recursively sort the lesser list
+      quicksort(list,m,j-1);
+      quicksort(list,j+1,n);
+
+   }
+}
 
