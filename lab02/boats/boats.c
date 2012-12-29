@@ -130,7 +130,8 @@ long long int LIS (long long int array[], long long int N) {
     long long int L,i,j;
     long long int P[N],M[N];
     L=0;
-    
+    M[1]=0;
+    P[0]=0; 
     for (i=1; i<N; i++) {
        //binary search
        P[i]=M[j];
