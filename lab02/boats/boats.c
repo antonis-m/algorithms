@@ -13,7 +13,7 @@ void quicksort_dep (diad array[], long long int m, long long int n);
 void quicksort_arr (diad array[], long long int m, long long int n);
 
 int main() {
-long long int N,i;
+long long int N,i,j;
 diad * array;
 
 
@@ -28,7 +28,17 @@ for (i=0; i<N; i++){
 
 
 quicksort_dep(array,0,N-1);
-//check for common departure point
+i=j=0;
+while (i != (N-1)) {
+	while (array[i].dep == array[j].dep) {
+    		j++;
+	}
+	if (i != j-1) {
+    		quicksort_arr(array,i,j-1);
+                i=j; 
+       } else
+    		i=j;
+}
 //evresi megistis koinis upakolou8ias.
 for (i=0;i<N;i++)
     printf("%lld %lld \n", array[i].dep, array[i].arr);
@@ -70,8 +80,8 @@ long long int key,i,j,k;
       // swap two elements
       swap(&list[m],&list[j]);
       // recursively sort the lesser list
-      quicksort(list,m,j-1);
-      quicksort(list,j+1,n);
+      quicksort_dep(list,m,j-1);
+      quicksort_dep(list,j+1,n);
 
    }
 }
@@ -97,8 +107,8 @@ long long int key,i,j,k;
       // swap two elements
       swap(&list[m],&list[j]);
       // recursively sort the lesser list
-      quicksort(list,m,j-1);
-      quicksort(list,j+1,n);
+      quicksort_arr(list,m,j-1);
+      quicksort_arr(list,j+1,n);
 
    }
 }
