@@ -51,9 +51,10 @@ for (i=0; i<N; i++)
 
 //evresi megistis koinis upakolou8ias.
 result=LIS(list_arr, N);
+printf("%lld\n", result);
 
-for (i=0;i<N;i++)
-    printf("%lld \n", list_arr[i]);
+//for (i=0;i<N;i++)
+//    printf("%lld \n", list_arr[i]);
 
 free(array);
 free(list_arr);
