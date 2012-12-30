@@ -128,22 +128,32 @@ long long int key,i,j,k;
 
 long long int LIS (long long int array[], long long int N) {
 
-   long long int L,i,j;
+   long long int L,i,j,low,high,mid;
    long long int c[N];
    for (i=0; i<N; i++)
        c[i]=-1;
    c[0]=array[0];
    L=1;
    for (i=1; i<N; i++) {
-      if (array[i] > c[i-1]) {
+      if (array[i] >= c[i-1]) {
          c[i]=array[i];
          L += 1;
       } else {
-         //binary search
+         low=0; high=(i-1); 
+         while (low<=high) {
+           mid=(low+high)/2;
+
+           if (c[mid]<array[i]) {
+               low=mid+1;
+           } else if (c[mid]>=array[i])
+               high=mid;
+           
+          c[mid]=array[i];         
+         }
       }
 
    }
-
+return L;
 }
 
 
