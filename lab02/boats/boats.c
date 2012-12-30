@@ -127,27 +127,24 @@ long long int key,i,j,k;
 }
 
 long long int LIS (long long int array[], long long int N) {
-    long long int L,i,j;
-    long long int P[N],M[N];
-    L=0;
-    M[1]=0;
-    P[0]=0; 
-    for (i=1; i<N; i++) {
-       //binary search
-       P[i]=M[j];
-       if ((j==L) || (array[i]< array[M[j+1]])) {
-          M[j+1]=i;
-          L=max(L,j+1);  
-       }  
-    }
-     
-return L;
+
+   long long int L,i,j;
+   long long int c[N];
+   for (i=0; i<N; i++)
+       c[i]=-1;
+   c[0]=array[0];
+   L=1;
+   for (i=1; i<N; i++) {
+      if (array[i] > c[i-1]) {
+         c[i]=array[i];
+         L += 1;
+      } else {
+         //binary search
+      }
+
+   }
+
 }
-
-
-
-
-
 
 
 
