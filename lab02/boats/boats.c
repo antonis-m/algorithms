@@ -50,11 +50,12 @@ for (i=0; i<N; i++)
 
 
 //evresi megistis koinis upakolou8ias.
+//printf("mpainei sto lis\n");
+//for (i=0;i<N;i++)
+//    printf("%lld \n", list_arr[i]);
 result=LIS(list_arr, N);
 printf("%lld\n", result);
 
-//for (i=0;i<N;i++)
-//    printf("%lld \n", list_arr[i]);
 
 free(array);
 free(list_arr);
@@ -134,25 +135,30 @@ long long int LIS (long long int array[], long long int N) {
    for (i=0; i<N; i++)
        c[i]=-1;
    c[0]=array[0];
-   L=1;
+   L=0;
    for (i=1; i<N; i++) {
       if (array[i] >= c[i-1]) {
          c[i]=array[i];
          L += 1;
+//         printf("%lld %lld \n",i,c[i]);
       } else {
-         low=0; high=(i-1); 
-         while (low<=high) {
+         low=0;
+         high=i-1; 
+         while (low<high) {
            mid=(low+high)/2;
-
            if (c[mid]<array[i]) {
+//               printf("111");
                low=mid+1;
-           } else if (c[mid]>=array[i])
-               high=mid;
-           
-          c[mid]=array[i];         
-         }
+           } else if (c[mid]>=array[i]) {
+//                printf("222");
+                if (c[mid-1]<array[i]) {
+                   c[mid]=array[i];
+                   break;
+                } else  high=mid-1;
+           }                   
+         } 
+//      printf("%lld %lld %lld \n",i, low , high);
       }
-
    }
 return L;
 }
