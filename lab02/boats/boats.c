@@ -50,9 +50,9 @@ for (i=0; i<N; i++)
 
 //evresi megistis koinis upakolou8ias.
 
-for (i=0;i<N;i++)
-printf("%lld \n", list_arr[i]);
-printf("\n\n");
+//for (i=0;i<N;i++)
+//printf("%lld \n", list_arr[i]);
+//printf("\n\n");
 result=LIS(list_arr, N);
 printf("%lld\n", result);
 
@@ -152,25 +152,30 @@ long long int LIS (long long int array[], long long int N) {
                 low=mid+1;
 
              else if (c[mid]>array[i]) {
-                high=mid-1;
-                if ((c[mid-1]<array[i]) && (mid!=0)) {
-                     c[mid]=array[i];
-                     break;
-                } else high=mid-1;
-                
-           } else if (c[mid]==array[i]) {
-                 temp=c[mid]; k=mid-1;
-                 while (c[k]==temp) {
-                    c[k]=array[i];
-                    k--; 
-                 }
-                 k=mid;
-                 while (c[k]==temp) {
+               if (mid==0) {                  //simantiki allagi pou ekane ton kwdika na doulepsei. krataw panta to mikrotero apo ta megalutera
+                 c[mid]=array[i];
+                 high=mid-1;
+              }  else {
+                 high=mid-1;
+                 if (c[mid-1]<array[i]) {
+                    c[mid]=array[i];
+                    }              
+                }
+           }  else if (c[mid]==array[i]) {
+                  
+                   k=mid;
+                   while (c[k]==c[mid]) {
+                        k++;
+                    }
+                    temp=c[k];
+                    c[k]=array[i]; 
+                    k++;
+                    while (c[k]==temp) {
                         c[k]=array[i];
                         k++;
                        }
            break;         
-           }
+            } 
                               
          }   
       }
@@ -178,9 +183,9 @@ long long int LIS (long long int array[], long long int N) {
 
 
 
-for(l=0; l<L;l++)
-printf("%lld\n",c[l]);
-printf("\n");
+//for(l=0; l<L;l++)
+//printf("%lld\n",c[l]);
+//printf("\n");
 }
 return L;
 }
