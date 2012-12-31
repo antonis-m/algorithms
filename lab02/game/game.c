@@ -6,13 +6,22 @@
 
 
 int main() {
-long long int N;
+long long int N,i;
 long long int * array;
-
+long long int **list;
 scanf( "%lld", &N);
 array=malloc(sizeof(long long int)*N);
+*list=malloc(sizeof(long long int *)*N);
 
 for (i=0; i<N; i++){
-   scanf("%lld", &array[i].dep);
-   scanf("%lld", &array[i].arr);
+ list[i]=malloc(sizeof(long long int)*(N-i));
+}
+
+
+for (i=0; i<N; i++){
+   scanf("%lld", &array[i]);
+}
+
+
+return 0;
 }
