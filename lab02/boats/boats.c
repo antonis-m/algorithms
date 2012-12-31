@@ -32,8 +32,9 @@ for (i=0; i<N; i++){
 
 
 quicksort_dep(array,0,N-1);
+
 i=j=0;
-while (i != (N-1)) {
+while ((i != (N-1)) && (j<(N-1))) {
 	while (array[i].dep == array[j].dep) {
     		j++;
 	}
@@ -43,16 +44,15 @@ while (i != (N-1)) {
        } else
     		i=j;
 }
-
 list_arr=malloc(sizeof(long long int)*N);
 for (i=0; i<N; i++)
     list_arr[i]=array[i].arr;
 
-
 //evresi megistis koinis upakolou8ias.
-//printf("mpainei sto lis\n");
-//for (i=0;i<N;i++)
-//    printf("%lld \n", list_arr[i]);
+
+for (i=0;i<N;i++)
+printf("%lld \n", list_arr[i]);
+printf("\n\n");
 result=LIS(list_arr, N);
 printf("%lld\n", result);
 
@@ -130,36 +130,58 @@ long long int key,i,j,k;
 
 long long int LIS (long long int array[], long long int N) {
 
-   long long int L,i,j,low,high,mid;
+   long long int L,i,j,k,l,low,high,mid,temp;
    long long int c[N];
-   for (i=0; i<N; i++)
-       c[i]=-1;
+   j=0;
+   for (i=0; i<N; i++)  
+       c[j]=-1;
    c[0]=array[0];
-   L=0;
+   L=1;
    for (i=1; i<N; i++) {
-      if (array[i] >= c[i-1]) {
-         c[i]=array[i];
+       if (array[i] >= c[j]) {
+         j++;
+         c[j]=array[i];
          L += 1;
-//         printf("%lld %lld \n",i,c[i]);
       } else {
          low=0;
-         high=i-1; 
-         while (low<high) {
+         high=j; 
+         while (low<=high) {
            mid=(low+high)/2;
-           if (c[mid]<array[i]) {
-//               printf("111");
-               low=mid+1;
-           } else if (c[mid]>=array[i]) {
-//                printf("222");
-                if (c[mid-1]<array[i]) {
-                   c[mid]=array[i];
-                   break;
-                } else  high=mid-1;
-           }                   
-         } 
-//      printf("%lld %lld %lld \n",i, low , high);
+
+           if (c[mid]<array[i])
+                low=mid+1;
+
+             else if (c[mid]>array[i]) {
+                high=mid-1;
+                if ((c[mid-1]<array[i]) && (mid!=0)) {
+                     c[mid]=array[i];
+                     break;
+                } else high=mid-1;
+                
+           } else if (c[mid]==array[i]) {
+                 temp=c[mid]; k=mid-1;
+                 while (c[k]==temp) {
+                    c[k]=array[i];
+                    k--; 
+                 }
+                 k=mid;
+                 while (c[k]==temp) {
+                        c[k]=array[i];
+                        k++;
+                       }
+           break;         
+           }
+                              
+         }   
       }
-   }
+
+
+
+
+for(l=0; l<L;l++)
+printf("%lld\n",c[l]);
+printf("\n");
+}
 return L;
 }
 
