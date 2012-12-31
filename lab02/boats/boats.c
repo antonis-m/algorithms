@@ -153,11 +153,23 @@ long long int LIS (long long int array[], long long int N) {
 
              else if (c[mid]>array[i]) {
                if (mid==0) {                  //simantiki allagi pou ekane ton kwdika na doulepsei. krataw panta to mikrotero apo ta megalutera
+                /* temp=c[mid];
+                 k=mid+1;
+                 while (c[k]==temp) {
+                     c[k]=array[i];
+                     k++;
+                 } */
                  c[mid]=array[i];
                  high=mid-1;
               }  else {
                  high=mid-1;
                  if (c[mid-1]<array[i]) {
+                   /*  temp=c[mid];
+                     k=mid+1;
+                     while (c[k]==temp) {
+                       c[k]=array[i];
+                       k++;
+                     } */
                     c[mid]=array[i];
                     }              
                 }
@@ -171,10 +183,10 @@ long long int LIS (long long int array[], long long int N) {
                     c[k]=array[i]; 
                     k++;
                     while (c[k]==temp) {
-                        c[k]=array[i];
-                        k++;
+                       c[k]=array[i];
+                       k++;
                        }
-           break;         
+                   break;         
             } 
                               
          }   
