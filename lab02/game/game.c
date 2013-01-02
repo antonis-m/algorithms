@@ -6,7 +6,7 @@
 
 
 int main() {
-long long int N,i,j,l,k;
+long long int N,i,j,l,k,mik,mkji,money;
 long long int * array;
 long long int **list,list2 ;
 scanf( "%lld", &N);
@@ -21,7 +21,7 @@ for (i=0; i<N; i++){
 // list2[i]=(long long int *)malloc(sizeof(long long int )*(N-i));
 }
 
-
+money=0;
 for (i=0; i<N; i++) {
  list[N-1-i][i]=0; 
 }
@@ -37,12 +37,15 @@ for (l=2; l<=N; l++ ) {   //to mikos tis akolouthias pou koitaw
       j=i+l-1;
       list[N-1-j][i]=-1;
       for (k=i;k<j;k++) {
-
-
+          mik = cum_sum[k]-cum_sum[i]; 
+          mkj = cum_sum[j]-cum_sum[k];
+          list[N-1-j][i]=min(mik,mkj);
       } 
    }
+money += list[N-1-j][i];
 }
 
+printf("%lld\n",money);
 
 
 for (i=0; i<N; i++){
