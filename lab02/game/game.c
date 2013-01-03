@@ -8,22 +8,25 @@
 int main() {
 long long int N,i,j,l,k,mik,mkj,money,temp;
 long long int * array, * cum_sum;
-long long int **list;
+long long int **list, **list2;
 scanf( "%lld", &N);
 
 array=malloc(sizeof(long long int)*N);
 cum_sum=malloc(sizeof(long long int)*N);
 
 list=(long long int **)malloc(sizeof(long long int *)*N);
+list2=(long long int **)malloc(sizeof(long long int *)*N);
 
-for (i=0; i<N; i++)
+for (i=0; i<N; i++){
  list[i]=(long long int *)malloc(sizeof(long long int)*(N-i));
-
+ list2[i]=(long long int *)malloc(sizeof(long long int)*(N-i));
+ }
 
 money=0;
-for (i=0; i<N; i++) 
+for (i=0; i<N; i++) { 
  list[N-i-1][i]=0;  
-
+ list2[N-i-1][i]=0;
+}
 for (i=0; i<N; i++) 
    scanf("%lld", &array[i]);
 
@@ -45,11 +48,12 @@ for (l=2; l<=N; l++ ) {   //to mikos tis akolouthias pou koitaw
           mkj = cum_sum[j]-cum_sum[k-1];
           }
           temp=min(mik,mkj);
-          if (temp > list[N-j-1][i]) {
+          if (temp >= list[N-j-1][i]) {
           list[N-j-1][i]=temp;
+          list2[N-j-1][i]=k;
           }
       } 
-//printf("%lld %lld %lld \n",N-j-1,i,list[N-j-1][i]);
+//printf("%lld %lld %lld %lld\n",N-j-1,i,list[N-j-1][i],list2[N-j-1][i]);
    }
 //money += list[N-1-j][i];
 }
