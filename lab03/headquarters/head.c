@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void fastpower (int **,long long int k,long long int N);
-int main () {
 
+int main () {
 long long int k,N,s,t,M,i,j,temp1,temp2;
 int **array;
 
@@ -15,15 +14,18 @@ for(i=0; i<N; i++)
 
 for (i=0; i<M; i++) { 
   scanf("%lld %lld", &temp1, &temp2);
-  array[temp1][temp2]=1;
+  array[temp1-1][temp2-1]=1;
 }
 
-fastpower(array,k,N);
+//fastpower(array,k,N);
 for (i=0; i<N; i++){ 
  for (j=0; j<N; j++)
     printf("%d ",array[i][j]);
  printf("\n"); 
 }
+for (i=0; i<N; i++)
+ free(array[i]);
+free(array);
 return 0;
 }
 
@@ -41,7 +43,7 @@ void fastpower(int **array, long long int k,long long int N) {
   }
  for(i=0; i<N; i++) 
    temp[i][i]=1;
-
+ printf("flag2 ");
  while (k>0) {
  if ((k&1) == 0) { 
    for (i=0; i<N; i++) {
@@ -55,7 +57,7 @@ void fastpower(int **array, long long int k,long long int N) {
  **temp=**C;  
  k--;
  }
-
+  printf("flag3 ");
   k= k/2;
   for (i=0; i<N; i++) {
     for (j=0; j<N; j++) {
