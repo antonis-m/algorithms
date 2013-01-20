@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-void fastpower (int **,long long int ,long long int);
+void fastpower (int **,long long int k,long long int N);
 int main () {
 
 long long int k,N,s,t,M,i,temp1,temp2;
@@ -18,18 +18,28 @@ for (i=0; i<M; i++) {
   array[temp1][temp2]=1;
 }
 
+fastpower(array,k,N);
 return 0;
 }
 
 
-void fastpower(array, k,N) {
- long long int
+void fastpower(int **array, long long int k,long long int N) {
+ long long int i; 
  int **temp;
  temp=(int**)malloc(N*sizeof(int *));
  for(i=0; i<N; i++)
    temp[i]=(int *)calloc(N,sizeof(int));
  for(i=0; i<N; i++) 
    temp[i][i]=1;
-
-
+ while (k>0) {
+ if ((k&1) == 0)
+  ; // temp=temp*array;
+ else { 
+    k= k/2;
+   // array=array*array;
+  }
+ }
+array=temp;
 }
+
+
