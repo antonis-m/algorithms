@@ -27,9 +27,9 @@ void fastpower(array, k,N) {
  int **temp;
  temp=(int**)malloc(N*sizeof(int *));
  for(i=0; i<N; i++)
-   array[i]=(int *)calloc(N,sizeof(int));
+   temp[i]=(int *)calloc(N,sizeof(int));
  for(i=0; i<N; i++) 
-   array[i][i]=1;
+   temp[i][i]=1;
 
 
 }
