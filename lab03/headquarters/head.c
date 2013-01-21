@@ -1,31 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void fastpower (int **,long long int k,long long int N);
+void fastpower (long long int **,long long int k,long long int N);
 
 int main () {
 long long int k,N,s,t,M,i,j,temp1,temp2;
-int **array;
+long long int **array;
 
 scanf("%lld %lld %lld %lld %lld", &k, &N, &M, &s, &t);
-array=(int**)malloc(N*sizeof(int *));
+array=(long long int**)malloc(N*sizeof(long long int *));
 for(i=0; i<N; i++)
-  array[i]=(int *)calloc(N,sizeof(int));
+  array[i]=(long long int *)calloc(N,sizeof(long long int));
 
 for (i=0; i<M; i++) { 
   scanf("%lld %lld", &temp1, &temp2);
   array[temp1-1][temp2-1]=1;
 }
 
-fastpower(array,k,N);
+fastpower(array,k-1,N);
 
 
-for (i=0; i<N; i++){ 
+/*for (i=0; i<N; i++){ 
  for (j=0; j<N; j++)
-    printf("%d ",array[i][j]);
+    printf("%lld ",array[i][j]);
  printf("\n"); 
 }
-
+*/
 
 for (i=0; i<N; i++)
  free(array[i]);
@@ -34,16 +34,16 @@ return 0;
 }
 
 
-void fastpower(int **array, long long int k,long long int N) {
+void fastpower(long long int **array, long long int k,long long int N) {
  long long int i,j,l; 
- int **temp, **C;
- int sum;
- temp=(int**)malloc(N*sizeof(int *));
- C= (int**)malloc(N*sizeof(int *));
+ long long int **temp, **C;
+ long long int sum;
+ temp=(long long int**)malloc(N*sizeof(long long int *));
+ C= (long long int**)malloc(N*sizeof(long long int *));
 
  for(i=0; i<N; i++) {
-   temp[i]=(int *)calloc(N,sizeof(int));
-   C[i]=(int *)calloc(N,sizeof(int));
+   temp[i]=(long long int *)calloc(N,sizeof(long long int));
+   C[i]=(long long int *)calloc(N,sizeof(long long int));
   }
  for(i=0; i<N; i++) 
    temp[i][i]=1;
@@ -77,10 +77,10 @@ void fastpower(int **array, long long int k,long long int N) {
  }
 for (i=0; i<N; i++)
   for (j=0; j<N; j++) {
-    if (temp[i][j]!=0)
+/*    if (temp[i][j]!=0)
     array[i][j]=1;
    else array[i][j]=0;
- //  array[i][j]=temp[i][j];
+*/   array[i][j]=temp[i][j];
 }
 for (i=0; i<N; i++) {
   free(temp[i]);
