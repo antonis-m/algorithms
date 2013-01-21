@@ -17,12 +17,16 @@ for (i=0; i<M; i++) {
   array[temp1-1][temp2-1]=1;
 }
 
-//fastpower(array,k,N);
+fastpower(array,k,N);
+
+
 for (i=0; i<N; i++){ 
  for (j=0; j<N; j++)
     printf("%d ",array[i][j]);
  printf("\n"); 
 }
+
+
 for (i=0; i<N; i++)
  free(array[i]);
 free(array);
@@ -43,9 +47,8 @@ void fastpower(int **array, long long int k,long long int N) {
   }
  for(i=0; i<N; i++) 
    temp[i][i]=1;
- printf("flag2 ");
  while (k>0) {
- if ((k&1) == 0) { 
+ if ( k & 1 ) { 
    for (i=0; i<N; i++) {
      for (j=0; j<N; j++) {
        sum=0;
@@ -54,10 +57,10 @@ void fastpower(int **array, long long int k,long long int N) {
          C[i][j]=sum;
      }
    }
- **temp=**C;  
- k--;
+ for (i=0; i<N; i++)
+   for (j=0; j<N; j++)
+     temp[i][j]=C[i][j];
  }
-  printf("flag3 ");
   k= k/2;
   for (i=0; i<N; i++) {
     for (j=0; j<N; j++) {
@@ -67,9 +70,18 @@ void fastpower(int **array, long long int k,long long int N) {
         C[i][j]=sum;
     }
   }
- **array=**C;  
+ for (i=0; i<N; i++)
+   for (j=0; j<N; j++)
+     array[i][j]=C[i][j];
+
  }
-array=temp;
+for (i=0; i<N; i++)
+  for (j=0; j<N; j++) {
+    if (temp[i][j]!=0)
+    array[i][j]=1;
+   else array[i][j]=0;
+ //  array[i][j]=temp[i][j];
+}
 for (i=0; i<N; i++) {
   free(temp[i]);
   free(C[i]);
