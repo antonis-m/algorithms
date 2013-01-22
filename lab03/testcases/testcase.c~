@@ -10,12 +10,12 @@ long long int N,i,weight;
 long long int ** array;
 scanf("%lld", &N);
 
-array=(long long int **)malloc((N-1)*sizeof(long long int));
-for(i=0; i<N-1; i++)
+array=(long long int **)malloc(N*sizeof(long long int));
+for(i=0; i<N; i++)
   array[i]=(long long int *)malloc(3*sizeof(long long int));
 weight=0;
 
-for (i=0; i<N-1; i++) {
+for (i=0; i<N; i++) {
  scanf("%lld",&array[i][0]);
  scanf("%lld",&array[i][1]);
  scanf("%lld",&array[i][2]);
@@ -24,11 +24,8 @@ for (i=0; i<N-1; i++) {
 }
 
 
-quicksort(array,0,N-2);
-for(i=0; i<N-1; i++)
-printf("%lld %lld %lld\n",array[i][0],array[i][1],array[i][2]);
 
-for (i=0; i<N-1; i++)
+for (i=0; i<N; i++)
   free(array[i]);
 free(array);
 
@@ -58,30 +55,5 @@ long long int ch_pivot (long long int i, long long int j) {
 }
 
 
-void quicksort (long long int ** array, long long int m, long long int n) {
-long long int key,i,j,k;
-   if( m < n)
-   {
-      k = ch_pivot(m,n);
-      swap(array,m,k);
-      key = array[m][2];
-      i = m+1;
-      j = n;
-      while(i <= j)
-      {
-         while((i <= n) && (array[i][2] <= key))
-                i++;
-         while((j >= m) && (array[j][2] > key))
-                j--;
-        if( i < j)
-                swap(array,i,j);
-      }
-      // swap two elements
-      swap(array,m,j);
-      // recursively sort the lesser list
-      quicksort(array,m,j-1);
-      quicksort(array,j+1,n);
 
-   }
-}
 
