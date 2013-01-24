@@ -4,15 +4,21 @@
 void swap (long long int ** ,long long int x, long long int y);
 long long int ch_pivot (long long int i, long long int j);
 void quicksort (long long int **, long long int m, long long int n);
+long long int find (long long int, long long int *);
+void uni (long long int , long long int, long long int *);
 
 int main () {
-long long int N,i,weight;
+long long int N,i,weight,u;
 long long int ** array;
+long long int *list;
 scanf("%lld", &N);
 
-array=(long long int **)malloc((N-1)*sizeof(long long int));
-for(i=0; i<N-1; i++)
+array=(long long int **)malloc((N-1)*sizeof(long long int *));
+list=(long long int *)malloc(N*sizeof(long long int));
+for(i=0; i<N-1; i++) {
   array[i]=(long long int *)malloc(3*sizeof(long long int));
+  list[i]=i;
+} 
 weight=0;
 
 for (i=0; i<N-1; i++) {
@@ -20,18 +26,19 @@ for (i=0; i<N-1; i++) {
  scanf("%lld",&array[i][1]);
  scanf("%lld",&array[i][2]);
  weight += array[i][2];
-
 }
 
 
 quicksort(array,0,N-2);
-for(i=0; i<N-1; i++)
-printf("%lld %lld %lld\n",array[i][0],array[i][1],array[i][2]);
+//for (i=0; i<N-1; i++)
+//printf("%lld %lld %lld\n",array[i][0],array[i][1],array[i][2]);
+
+
+
 
 for (i=0; i<N-1; i++)
   free(array[i]);
 free(array);
-
 return 0; 
 }
 
@@ -85,3 +92,14 @@ long long int key,i,j,k;
    }
 }
 
+long long int find (long long int x,long long int *list) {
+while (x!=list[x])
+ x=list[x];
+return x;
+}
+
+void uni (long long int u, long long int v, long long int * list) {
+
+
+
+}
