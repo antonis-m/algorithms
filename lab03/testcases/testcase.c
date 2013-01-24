@@ -18,7 +18,8 @@ list=(long long int *)malloc(N*sizeof(long long int));
 for(i=0; i<N-1; i++) {
   array[i]=(long long int *)malloc(3*sizeof(long long int));
   list[i]=i;
-} 
+}
+list[N-1]=N-1; 
 weight=0;
 
 for (i=0; i<N-1; i++) {
@@ -30,15 +31,14 @@ for (i=0; i<N-1; i++) {
 
 
 quicksort(array,0,N-2);
-//for (i=0; i<N-1; i++)
-//printf("%lld %lld %lld\n",array[i][0],array[i][1],array[i][2]);
-
+//otan kanw find na zitaw akmi -1
 
 
 
 for (i=0; i<N-1; i++)
   free(array[i]);
 free(array);
+free(list);
 return 0; 
 }
 
@@ -94,12 +94,13 @@ long long int key,i,j,k;
 
 long long int find (long long int x,long long int *list) {
 while (x!=list[x])
- x=list[x];
+x=list[x];
 return x;
 }
 
 void uni (long long int u, long long int v, long long int * list) {
-
-
+if (u==v)
+ return;
+else list[v-1]=u-1;
 
 }
