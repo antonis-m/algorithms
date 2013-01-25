@@ -8,20 +8,20 @@ long long int find (long long int, long long int *);
 void uni (long long int , long long int, long long int *);
 
 int main () {
-long long int N,i,weight,u;
+long long int N,i,weight,j,k,u,v,ne,added;
 long long int ** array;
-long long int *list;
+long long int *p;
 scanf("%lld", &N);
 
 array=(long long int **)malloc((N-1)*sizeof(long long int *));
-list=(long long int *)malloc(N*sizeof(long long int));
+p=(long long int *)malloc(N*sizeof(long long int));
 for(i=0; i<N-1; i++) {
   array[i]=(long long int *)malloc(3*sizeof(long long int));
-  list[i]=i;
+  p[i]=0;
 }
-list[N-1]=N-1; 
+p[N-1]=0; 
 weight=0;
-
+ne=0;
 for (i=0; i<N-1; i++) {
  scanf("%lld",&array[i][0]);
  scanf("%lld",&array[i][1]);
@@ -33,12 +33,40 @@ for (i=0; i<N-1; i++) {
 quicksort(array,0,N-2);
 //otan kanw find na zitaw akmi -1
 
+/*for (i=0; i<N-1; i++) {
+  j=array[i][0];
+  k=array[i][1];
+  added=array[i][2]+1;
+  u=find(j-1,list);
+  v=find(k-1,list);
+  uni(u,v,list);
+}*/
+
+while(ne<N-1) {
+
+  for (i=0; i<N-1; i++) {
+    u=array[i][0]-1;
+    v=array[i][1]-1;
+    while(p[u])
+      u=p[u]; 
+    while(p[v])
+      v=p[v];
+   if (u!=v) {
+     ne++;
+     p[v]=u;
+   } 
+      
+  }
+
+}
 
 
+for(i=0; i<N; i++)
+  printf("%lld ", p[i]);
 for (i=0; i<N-1; i++)
   free(array[i]);
 free(array);
-free(list);
+free(p);
 return 0; 
 }
 
@@ -95,7 +123,7 @@ long long int key,i,j,k;
 long long int find (long long int x,long long int *list) {
 while (x!=list[x])
 x=list[x];
-return x;
+return x+1;
 }
 
 void uni (long long int u, long long int v, long long int * list) {
