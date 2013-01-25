@@ -1,14 +1,21 @@
+/* Λογική κώδικα.  Αντιπρόσωπος ενός συνόλου είναι αυτός
+ * κάτω από τον οποίο κρέμονται όλες οι ακμές του συνόλου αυτου.
+ * Βρες για κάθε μια από τις ακμές τον αντιπρόσωπο της. Κανε τον ένα αντιπρόσωπο παιδί του άλλου
+ * και αύξησε το βάρος του. Για να βρω πόσες επιπλέον ακμές χρειάζεται να βάλω για να είναι το δέντρο πλήρες
+ * ξέρω το βάρος του ενός αντιπροσώπου ξέρω και το βάρος του άλλου. Άρα ξέρω πόσους κόμβους έχω στο ένα σύνολο 
+ * και πόσους στο άλλο. Υπολογίζω μαξ ακμές και αφαιρώ μια. Τέλος.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
 void swap (long long int ** ,long long int x, long long int y);
 long long int ch_pivot (long long int i, long long int j);
 void quicksort (long long int **, long long int m, long long int n);
-long long int find_steps (long long int **, long long int);
 long long int find (long long int **, long long int);
 
 int main () {
-long long int N,i,l,weight,u,v,rep_u,rep_v,edge_weight,nodes1set,nodes2set,edges_added;
+long long int N,i,weight,u,v,rep_u,rep_v,edge_weight,nodes1set,nodes2set,edges_added;
 long long int ** array;
 long long int **p;
 scanf("%lld", &N);
@@ -121,18 +128,6 @@ long long int key,i,j,k;
       quicksort(array,j+1,n);
 
    }
-}
-
-long long int find_steps(long long int **p, long long int x) {
-  long long int steps=0;
-  
-  while (x!=p[x][0]){
-      x= p[x][0];
-      steps++;
-  }
-
-
-return steps;
 }
 
 long long int find(long long int **p, long long int x) {
