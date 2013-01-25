@@ -1,0 +1,14 @@
+     steps_u=find_steps(p,u);
+     steps_v=find_steps(p,v);
+       printf("\n");
+
+     if (steps_u == steps_v) { //poso apexei to u kai to v apo ton antiproswpo tis klasis
+        rep_u=find(p,u);
+        p[v][0]=rep_u;
+        p[rep_u][1]+=1+p[v][1];
+        for (i=0; i<N; i++)
+          printf("%lld %lld %lld\n",i,p[i][0],p[i][1]);
+    } else (steps_u > steps_v)  {
+                 
+ 
+     } else {};
