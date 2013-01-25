@@ -4,24 +4,29 @@
 void swap (long long int ** ,long long int x, long long int y);
 long long int ch_pivot (long long int i, long long int j);
 void quicksort (long long int **, long long int m, long long int n);
-long long int find (long long int, long long int *);
-void uni (long long int , long long int, long long int *);
+long long int find_steps (long long int **, long long int);
+long long int find (long long int **, long long int);
 
 int main () {
-long long int N,i,weight,j,k,u,v,ne,added;
+long long int N,i,weight,u,v,ne,steps_u,steps_v,rep_u,rep_v;
 long long int ** array;
-long long int *p;
+long long int **p;
 scanf("%lld", &N);
 
 array=(long long int **)malloc((N-1)*sizeof(long long int *));
-p=(long long int *)malloc(N*sizeof(long long int));
-for(i=0; i<N-1; i++) {
+p=(long long int **)malloc(N*sizeof(long long int*));
+
+for(i=0; i<N-1; i++) 
   array[i]=(long long int *)malloc(3*sizeof(long long int));
-  p[i]=0;
-}
-p[N-1]=0; 
+for (i=0; i<N; i++){
+  p[i]=(long long int*)calloc(2,sizeof(long long int));
+  p[i][0]=i;
+  p[i][1]=0;
+} 
+
 weight=0;
 ne=0;
+
 for (i=0; i<N-1; i++) {
  scanf("%lld",&array[i][0]);
  scanf("%lld",&array[i][1]);
@@ -31,40 +36,38 @@ for (i=0; i<N-1; i++) {
 
 
 quicksort(array,0,N-2);
-//otan kanw find na zitaw akmi -1
-
-/*for (i=0; i<N-1; i++) {
-  j=array[i][0];
-  k=array[i][1];
-  added=array[i][2]+1;
-  u=find(j-1,list);
-  v=find(k-1,list);
-  uni(u,v,list);
-}*/
 
 while(ne<N-1) {
 
   for (i=0; i<N-1; i++) {
     u=array[i][0]-1;
     v=array[i][1]-1;
-    while(p[u])
-      u=p[u]; 
-    while(p[v])
-      v=p[v];
+
    if (u!=v) {
      ne++;
-     p[v]=u;
-   } 
+     steps_u=find_steps(p,u);
+     steps_v=find_steps(p,v);
+//     printf("%lld %lld \n",steps_u,steps_v);
+       printf("\n");
+     if (steps_u == steps_v) {
+        rep_u=find(p,u);
+        p[v][0]=rep_u;
+        p[rep_u][1]+=1+p[v][1];
+        for (i=0; i<N; i++)
+          printf("%lld %lld %lld\n",i,p[i][0],p[i][1]);
+     }// else
+
+     } 
       
   }
 
 }
 
 
-for(i=0; i<N; i++)
-  printf("%lld ", p[i]);
-for (i=0; i<N-1; i++)
+for (i=0; i<N-1; i++){
   free(array[i]);
+  free(p[i]);
+}
 free(array);
 free(p);
 return 0; 
@@ -120,15 +123,21 @@ long long int key,i,j,k;
    }
 }
 
-long long int find (long long int x,long long int *list) {
-while (x!=list[x])
-x=list[x];
-return x+1;
+long long int find_steps(long long int **p, long long int x) {
+  long long int steps=0;
+  
+  while (x!=p[x][0]){
+      x= p[x][0];
+      steps++;
+  }
+
+
+return steps;
 }
 
-void uni (long long int u, long long int v, long long int * list) {
-if (u==v)
- return;
-else list[v-1]=u-1;
+long long int find(long long int **p, long long int x) {
 
+  while (x!= p[x][0])
+    x=p[x][0];
+  return x;
 }
