@@ -19,7 +19,7 @@ long bpos=0L,bsize=0L;
 
 void swap (long *,long ,long );
 void DecreaseKey (long *,long ,long);
-void insert(long *, long,long);
+void insert(long *,long,long);   //to prwto long einai i 8esi stin opoia 8a ginei to insert
 int main() {
 
 long long int N,M,K,L,B,i;
@@ -47,8 +47,9 @@ for (i=0; i<B; i++)
    gas[i]=readLong();
 
 list[0]=0;
+for(i=1; i<=B; i++)
+ insert(list,i,0);
 
-//8a kanw push ka8e kainourio node sto heap. Gia ta venzinadika 8a prepei kapws na dw wste to dist na einai 0
 
 free(array);
 free(track);
@@ -69,6 +70,12 @@ void DecreaseKey (long * list, long x, long k) {
 list[x]=k;
 while (((x/2) != 0) && ( k < list[x/2]))
   swap(list,x,(x/2));
+
+}
+
+void insert(long * list,long x, long k) {
+list[x]=k;
+DecreaseKey(list,x,k);
 
 }
 
