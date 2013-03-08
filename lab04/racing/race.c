@@ -24,8 +24,8 @@ long bpos=0L,bsize=0L;
 
 void swap (heap *,long ,long );
 void DecreaseKey (heap *,long ,long,long);
-void IncreaseKey(heap *,long, long);
-long ExtractMin(heap *);
+void IncreaseKey(heap *,long,long long);
+long ExtractMin(heap *,long long );
 
 int main() {
 
@@ -82,7 +82,7 @@ for(i=B+1; i<=N; i++) {
 
 free(nodes);
 
-
+i=ExtractMin(list,N);
 
 
 free(array);
@@ -103,34 +103,43 @@ list[a]=temp;
 void DecreaseKey (heap * list, long i, long x, long k) {
 list[i].node=x;
 list[i].key=k;
-while (((i/2) != 0) && ( k < list[i/2].key))
-  swap(list,i,(i/2));
+while ((((i-1)/2) != 0) && ( k < list[(i-1)/2].key))
+  swap(list,i,((i-1)/2));
 
 }
 
 
-/*
-void IncreaseKey(long * list, long x,long k) {
-long int c;
-list[x]=k;
-while ((2*x <= N) || (2*x+1 <=N)) {
-  if (list[2*x] <= list[2*x+1]) { 
-    c=list[2*x];
-    swap(list,x,2*x);
+void IncreaseKey(heap * list, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
+heap c;
+while ((2*i+1 <= N) || (2*i+2 <=N)) {
+  if (list[2*i+1].key <= list[2*i+2].key) { 
+    c=list[2*i+1]; printf("helloooo  %ld %ld",c.node, c.key);
+    if (c.key <= list[i].key) {
+    swap(list,i,2*i+1);
+    printf("neo %ld \n",list[i].node);
+    i=2*i+1;
+   } else break;
   }
+
   else {
-    c=list[2*x+1];
-    swap(list,x,(2*x+1));
+    c=list[2*i+2];
+    if (c.key <= list[i].key) {
+    swap(list,i,(2*i+2));
+    i=2*i+2;
+     } else break;
     }
   }
 }
 
-*/
-//long ExtractMin(long * list) {
 
-
-
-//} 
+long ExtractMin(heap * list, long long n) {      //n to megethos tis enapomeinousas listas
+  printf("%ld %ld \n",list[0].node, list[0].key);
+  swap(list,0,n);
+  printf("%ld %ld ",list[0].node,list[0].key);
+  IncreaseKey(list, 0, n-1);
+  printf("%ld %ld ",list[0].node, list[0].key);
+  return 1;
+}  
 
 long readLong() 
 {
