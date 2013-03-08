@@ -19,7 +19,10 @@ long bpos=0L,bsize=0L;
 
 void swap (long *,long ,long );
 void DecreaseKey (long *,long ,long);
-void insert(long *,long,long);   //to prwto long einai i 8esi stin opoia 8a ginei to insert
+void insert(long *,long,long);
+void IncreaseKey(long *,long, long);
+void ExtractMin(long *);
+
 int main() {
 
 long long int N,M,K,L,B,i;
@@ -50,6 +53,10 @@ list[0]=0;
 for(i=1; i<=B; i++)
  insert(list,i,0);
 
+for(i=B+1; i<=N; i++)
+ insert(list,i,INF);  //eisagw kai tous upoloipous komvous me apostasi apo to s apeiri.
+
+
 
 free(array);
 free(track);
@@ -78,6 +85,28 @@ list[x]=k;
 DecreaseKey(list,x,k);
 
 }
+
+void IncreaseKey(long * list, long x,long k) {
+long int c;
+list[x]=k;
+while ((2*x <= N) || (2*x+1 <=N)) {
+  if (list[2*x] <= list[2*x+1]) { 
+    c=list[2*x];
+    swap(list,x,2*x);
+  }
+  else {
+    c=list[2*x+1];
+    swap(list,x,(2*x+1));
+    }
+  }
+}
+
+
+void ExtractMin(long * list) {
+
+
+
+} 
 
 long readLong() 
 {
