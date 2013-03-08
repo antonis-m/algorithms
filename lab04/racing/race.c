@@ -4,6 +4,8 @@
 #define INF 100000
 
 long readLong();
+
+
 typedef struct 
 {
   long int begin;
@@ -11,28 +13,26 @@ typedef struct
   long int dist;
 } edge;
 
-typedef struct 
-{ 
-  long int node;
-  long int key;
-} heap;
 
 char buffer[BSIZE];
 long bpos=0L,bsize=0L;
 
-int main () {
+void swap (long *,long ,long );
+void DecreaseKey (long *,long ,long);
+void insert(long *, long,long);
+int main() {
 
 long long int N,M,K,L,B,i;
 edge * array;
 long int * track;
 long int * gas;
-heap * list;
+long * list;
 
 scanf("%lld %lld %lld %lld %lld",&N,&M,&K,&L,&B);
 array=(edge *)calloc(M,sizeof(edge));
 track=(long int *)calloc(K, sizeof(long int));
 gas=(long int *)calloc(B, sizeof(long int ));
-list=(heap *)calloc(N+1,sizeof(long int));
+list=(long int *)calloc(N+1,sizeof(long int));
 
 for (i=0; i<M; i++) {
    array[i].begin=readLong();
@@ -46,8 +46,7 @@ for (i=0; i<K; i++)
 for (i=0; i<B; i++)
    gas[i]=readLong();
 
-list[0].node=0;
-list[0].key=0;
+list[0]=0;
 
 //8a kanw push ka8e kainourio node sto heap. Gia ta venzinadika 8a prepei kapws na dw wste to dist na einai 0
 
@@ -58,6 +57,20 @@ free(list);
 return 0;
 }
 
+void swap (long * list, long a,long b){
+long temp;
+
+temp=list[b];
+list[b]=list[a];
+list[a]=temp;
+}
+
+void DecreaseKey (long * list, long x, long k) {
+list[x]=k;
+while (((x/2) != 0) && ( k < list[x/2]))
+  swap(list,x,(x/2));
+
+}
 
 long readLong() 
 {
