@@ -13,29 +13,36 @@ typedef struct
   long int dist;
 } edge;
 
+typedef struct 
+{
+  long int node;
+  long int key;
+} heap;
 
 char buffer[BSIZE];
 long bpos=0L,bsize=0L;
 
-void swap (long *,long ,long );
-void DecreaseKey (long *,long ,long);
-void insert(long *,long,long);
-void IncreaseKey(long *,long, long);
-void ExtractMin(long *);
+void swap (heap *,long ,long );
+void DecreaseKey (heap *,long ,long,long);
+void IncreaseKey(heap *,long, long);
+long ExtractMin(heap *);
 
 int main() {
 
-long long int N,M,K,L,B,i;
+long long int N,M,K,L,B,i,j;
 edge * array;
 long int * track;
 long int * gas;
-long * list;
+long int * nodes;
+heap * list;
 
 scanf("%lld %lld %lld %lld %lld",&N,&M,&K,&L,&B);
+j=0;
 array=(edge *)calloc(M,sizeof(edge));
 track=(long int *)calloc(K, sizeof(long int));
 gas=(long int *)calloc(B, sizeof(long int ));
-list=(long int *)calloc(N+1,sizeof(long int));
+list=(heap *)calloc(N+1,sizeof(heap));
+nodes=(long int *)calloc(N,sizeof(long int));
 
 for (i=0; i<M; i++) {
    array[i].begin=readLong();
@@ -45,16 +52,36 @@ for (i=0; i<M; i++) {
 
 for (i=0; i<K; i++)
    track[i]=readLong();
-
 for (i=0; i<B; i++)
    gas[i]=readLong();
+for (i=0; i<N; i++)
+   nodes[i]=i+1;
 
-list[0]=0;
-for(i=1; i<=B; i++)
- insert(list,i,0);
+list[0].node=0;
+list[0].key=0;
+  
+for(i=0; i<B; i++) {
+ list[i+1].node=gas[i];
+ list[i+1].key=0;
+ nodes[gas[i]-1]=-1;
+}
 
-for(i=B+1; i<=N; i++)
- insert(list,i,INF);  //eisagw kai tous upoloipous komvous me apostasi apo to s apeiri.
+for(i=B+1; i<=N; i++) {
+ if (nodes[j]!=-1) {
+   list[i].node=nodes[j];
+   list[i].key=INF;
+   j++;
+} else {
+   while(nodes[j]==-1 && j<N) 
+    j++;
+   list[i].node=nodes[j];
+   list[i].key=INF;
+   j++;
+ }    
+} 
+
+free(nodes);
+
 
 
 
@@ -65,27 +92,24 @@ free(list);
 return 0;
 }
 
-void swap (long * list, long a,long b){
-long temp;
+void swap (heap * list, long a,long b){
+heap temp;
 
 temp=list[b];
 list[b]=list[a];
 list[a]=temp;
 }
 
-void DecreaseKey (long * list, long x, long k) {
-list[x]=k;
-while (((x/2) != 0) && ( k < list[x/2]))
-  swap(list,x,(x/2));
+void DecreaseKey (heap * list, long i, long x, long k) {
+list[i].node=x;
+list[i].key=k;
+while (((i/2) != 0) && ( k < list[i/2].key))
+  swap(list,i,(i/2));
 
 }
 
-void insert(long * list,long x, long k) {
-list[x]=k;
-DecreaseKey(list,x,k);
 
-}
-
+/*
 void IncreaseKey(long * list, long x,long k) {
 long int c;
 list[x]=k;
@@ -101,12 +125,12 @@ while ((2*x <= N) || (2*x+1 <=N)) {
   }
 }
 
+*/
+//long ExtractMin(long * list) {
 
-void ExtractMin(long * list) {
 
 
-
-} 
+//} 
 
 long readLong() 
 {
