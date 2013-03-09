@@ -19,6 +19,13 @@ typedef struct
   long int key;
 } heap;
 
+typedef struct linked
+{
+  long int end;
+  long int dist;
+  struct linked * next; 
+};
+
 char buffer[BSIZE];
 long bpos=0L,bsize=0L;
 
@@ -37,15 +44,21 @@ long int * gas;
 long int * nodes;
 heap * list;
 long int * heap_pos;
-long int * edge_pos;
+//long int * edge_pos;
+struct linked ** adj_list;
+
 
 scanf("%lld %lld %lld %lld %lld",&N,&M,&K,&L,&B);
-j=0;
 array=(edge *)calloc(M,sizeof(edge));
 track=(long int *)calloc(K, sizeof(long int));
 gas=(long int *)calloc(B, sizeof(long int ));
 list=(heap *)calloc(N+1,sizeof(heap));
 nodes=(long int *)calloc(N,sizeof(long int));
+
+adj_list=(struct linked **)malloc((N+1)*sizeof(struct linked *));
+struct linked * temp;
+for(i=0; i<=N; i++)
+  adj_list[i]=NULL;
 
 for (i=0; i<M; i++) {
    array[i].begin=readLong();
@@ -60,7 +73,17 @@ for (i=0; i<B; i++)
 for (i=0; i<N; i++)
    nodes[i]=i+1;
 
+for(i=0; i<M; i++) {    //diavase kai vale ston pinaka lista
+temp=(struct linked *)malloc(sizeof(struct linked));
+temp->next=NULL;
+j=array[i].begin;
+temp->end=array[i].end;
+temp->dist=array[i].dist;
+temp->next=adj_list[j];
+adj_list[j]=temp;
+}
 
+free(temp);
 
 list[0].node=0;
 list[0].key=0;
@@ -71,6 +94,7 @@ for(i=0; i<B; i++) {
  nodes[gas[i]-1]=-1;
 }
 
+j=0;
 for(i=B+1; i<=N; i++) {
  if (nodes[j]!=-1) {
    list[i].node=nodes[j];
@@ -88,9 +112,6 @@ for(i=B+1; i<=N; i++) {
 free(nodes);
 
 
-
-
-
 long int k;
 heap_pos=(long *)calloc(N+1,sizeof(long int));
 for (k=0; k<=N; k++) {
@@ -98,12 +119,15 @@ for (k=0; k<=N; k++) {
    heap_pos[i]=k; 
   }
 
-edge_pos=(long *)calloc(N+1,sizeof(long int));
+
+/*edge_pos=(long *)calloc(N+1,sizeof(long int));
 edge_pos[0]=0;
-for(k=1; k<=N; k++){
+for(i=0; i<M; i++)
+  edge_pos[array[i].begin]++;
+*/
 
 
-  
+
 
 
 k=N;
@@ -112,7 +136,7 @@ k=N;
 
 
 
-free(edge_pos);
+free(adj_list);
 free(heap_pos);
 free(array);
 free(track);
