@@ -29,12 +29,15 @@ long ExtractMin(heap *,long long );
 
 int main() {
 
-long long int N,M,K,L,B,i,j;
+long long int N,M,K,L,B;
+long int i,j;
 edge * array;
 long int * track;
 long int * gas;
 long int * nodes;
 heap * list;
+long int * heap_pos;
+long int * edge_pos;
 
 scanf("%lld %lld %lld %lld %lld",&N,&M,&K,&L,&B);
 j=0;
@@ -56,6 +59,8 @@ for (i=0; i<B; i++)
    gas[i]=readLong();
 for (i=0; i<N; i++)
    nodes[i]=i+1;
+
+
 
 list[0].node=0;
 list[0].key=0;
@@ -82,9 +87,33 @@ for(i=B+1; i<=N; i++) {
 
 free(nodes);
 
-i=ExtractMin(list,N);
 
 
+
+
+long int k;
+heap_pos=(long *)calloc(N+1,sizeof(long int));
+for (k=0; k<=N; k++) {
+   i=list[k].node;
+   heap_pos[i]=k; 
+  }
+
+edge_pos=(long *)calloc(N+1,sizeof(long int));
+edge_pos[0]=0;
+for(k=1; k<=N; k++){
+
+
+  
+
+
+k=N;
+//for (k=N; k>=0; k--)
+//i=ExtractMin(list,k);
+
+
+
+free(edge_pos);
+free(heap_pos);
 free(array);
 free(track);
 free(gas);
@@ -111,12 +140,11 @@ while ((((i-1)/2) != 0) && ( k < list[(i-1)/2].key))
 
 void IncreaseKey(heap * list, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
 heap c;
-while ((2*i+1 <= N) || (2*i+2 <=N)) {
+while ((2*i+1 <= N) && (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
   if (list[2*i+1].key <= list[2*i+2].key) { 
-    c=list[2*i+1]; printf("helloooo  %ld %ld",c.node, c.key);
+    c=list[2*i+1];
     if (c.key <= list[i].key) {
     swap(list,i,2*i+1);
-    printf("neo %ld \n",list[i].node);
     i=2*i+1;
    } else break;
   }
@@ -135,9 +163,7 @@ while ((2*i+1 <= N) || (2*i+2 <=N)) {
 long ExtractMin(heap * list, long long n) {      //n to megethos tis enapomeinousas listas
   printf("%ld %ld \n",list[0].node, list[0].key);
   swap(list,0,n);
-  printf("%ld %ld ",list[0].node,list[0].key);
   IncreaseKey(list, 0, n-1);
-  printf("%ld %ld ",list[0].node, list[0].key);
   return 1;
 }  
 
