@@ -29,10 +29,11 @@ typedef struct linked
 char buffer[BSIZE];
 long bpos=0L,bsize=0L;
 
+void swap_int (long *,long ,long); 
 void swap (heap *,long ,long );
-void DecreaseKey (heap *,long ,long,long);
-void IncreaseKey(heap *,long,long long);
-long ExtractMin(heap *,long long );
+void DecreaseKey (heap *,long *,long);
+void IncreaseKey(heap *,long *,long,long long);
+heap ExtractMin(heap *,long *,long long );
 
 int main() {
 
@@ -44,9 +45,8 @@ long int * gas;
 long int * nodes;
 heap * list;
 long int * heap_pos;
-//long int * edge_pos;
 struct linked ** adj_list;
-
+long int * D;
 
 scanf("%lld %lld %lld %lld %lld",&N,&M,&K,&L,&B);
 array=(edge *)calloc(M,sizeof(edge));
@@ -54,6 +54,7 @@ track=(long int *)calloc(K, sizeof(long int));
 gas=(long int *)calloc(B, sizeof(long int ));
 list=(heap *)calloc(N+1,sizeof(heap));
 nodes=(long int *)calloc(N,sizeof(long int));
+D=(long *)malloc((N+1)*sizeof(long int));
 
 adj_list=(struct linked **)malloc((N+1)*sizeof(struct linked *));
 struct linked * temp;
@@ -74,16 +75,15 @@ for (i=0; i<N; i++)
    nodes[i]=i+1;
 
 for(i=0; i<M; i++) {    //diavase kai vale ston pinaka lista
-temp=(struct linked *)malloc(sizeof(struct linked));
-temp->next=NULL;
-j=array[i].begin;
-temp->end=array[i].end;
-temp->dist=array[i].dist;
-temp->next=adj_list[j];
-adj_list[j]=temp;
+  temp=(struct linked *)malloc(sizeof(struct linked));
+  temp->next=NULL;
+  j=array[i].begin;
+  temp->end=array[i].end;
+  temp->dist=array[i].dist;
+  temp->next=adj_list[j];
+  adj_list[j]=temp;
 }
 
-free(temp);
 
 list[0].node=0;
 list[0].key=0;
@@ -116,33 +116,50 @@ long int k;
 heap_pos=(long *)calloc(N+1,sizeof(long int));
 for (k=0; k<=N; k++) {
    i=list[k].node;
-   heap_pos[i]=k; 
+   heap_pos[i]=k;  // o komvos i einai sti thesi k tou heap 
   }
 
+for(i=0; i<=N; i++) D[i]=INF;
+for(i=0; i<B; i++) D[gas[i]]=0;
+D[0]=0;
+for(i=0; i<=N; i++)
+  printf("%ld ", list[i].node);
+printf("\n");
+for(i=0; i<=N; i++)
+  printf("%ld ",heap_pos[i]);
+printf("\n");
 
-/*edge_pos=(long *)calloc(N+1,sizeof(long int));
-edge_pos[0]=0;
-for(i=0; i<M; i++)
-  edge_pos[array[i].begin]++;
-*/
+heap c;
+for (k=N; k>=0; k--) {
+  c=ExtractMin(list,heap_pos,k);
+  D[c.node]=c.key;
+  // for all nodes starting from c.node
+  temp=adj_list[c.node];
+  while(temp!=NULL) {
+    if (D[c.node]+temp->dist < D[temp->end]) { 
+        list[heap_pos[temp->end]].key = D[c.node]+temp->dist;
+//      DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
+      }
+    temp=temp->next;    
+  }// for (i=0; i<=N; i++) printf("%ld %ld \n", list[i].node,list[i].key);
+   // printf("\n\n");
+     
+}
 
-
-
-
-
-k=N;
-//for (k=N; k>=0; k--)
-//i=ExtractMin(list,k);
-
-
-
-free(adj_list);
-free(heap_pos);
-free(array);
-free(track);
-free(gas);
-free(list);
+free(D);
+for (i=0; i<=N; i++)
+ free(adj_list[i]);
+free(adj_list); free(heap_pos); free(array); free(track); free(gas); free(list);
 return 0;
+}
+
+
+void swap_int(long * list, long a ,long b) {
+long int temp;
+
+temp=list[b];
+list[b]=list[a];
+list[a]=temp;
 }
 
 void swap (heap * list, long a,long b){
@@ -153,30 +170,35 @@ list[b]=list[a];
 list[a]=temp;
 }
 
-void DecreaseKey (heap * list, long i, long x, long k) {
-list[i].node=x;
-list[i].key=k;
-while ((((i-1)/2) != 0) && ( k < list[(i-1)/2].key))
-  swap(list,i,((i-1)/2));
+void DecreaseKey (heap * list,long *heap_pos, long i) {
+long int k;
 
+k=list[i].key;
+while ((((i-1)/2) >= 0) && ( k < list[(i-1)/2].key)){
+  swap(list,i,((i-1)/2));
+  swap_int(heap_pos,i,(i-1)/2);
+  i=(i-1)/2;
+ }
 }
 
 
-void IncreaseKey(heap * list, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
+void IncreaseKey(heap * list,long * heap_pos, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
 heap c;
-while ((2*i+1 <= N) && (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
+while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
   if (list[2*i+1].key <= list[2*i+2].key) { 
     c=list[2*i+1];
-    if (c.key <= list[i].key) {
+    if (c.key < list[i].key) {
     swap(list,i,2*i+1);
+    swap_int(heap_pos,i,2*i+1);
     i=2*i+1;
    } else break;
   }
 
   else {
     c=list[2*i+2];
-    if (c.key <= list[i].key) {
+    if (c.key < list[i].key) {
     swap(list,i,(2*i+2));
+    swap_int(heap_pos, i, 2*i+2);
     i=2*i+2;
      } else break;
     }
@@ -184,11 +206,20 @@ while ((2*i+1 <= N) && (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
 }
 
 
-long ExtractMin(heap * list, long long n) {      //n to megethos tis enapomeinousas listas
-  printf("%ld %ld \n",list[0].node, list[0].key);
-  swap(list,0,n);
-  IncreaseKey(list, 0, n-1);
-  return 1;
+heap ExtractMin(heap * list,long * heap_pos, long long n) {   //n to megethos tis enapomeinousas listas
+  heap c;
+  long i;
+  c.node=list[0].node;
+  c.key=list[0].key;
+  i=list[n].node;
+  swap(list,0,n);  
+  swap_int(heap_pos,0,i); ////
+
+  list[n].key=INF+1000;
+//  for (i=0; i<=n; i++) printf("%ld %ld ",list[i].node, heap_pos[i]);
+//  printf("\n");
+  IncreaseKey(list,heap_pos, 0, n);
+  return c;
 }  
 
 long readLong() 
