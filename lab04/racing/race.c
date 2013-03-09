@@ -122,30 +122,31 @@ for (k=0; k<=N; k++) {
 for(i=0; i<=N; i++) D[i]=INF;
 for(i=0; i<B; i++) D[gas[i]]=0;
 D[0]=0;
-for(i=0; i<=N; i++)
+/*for(i=0; i<=N; i++)
   printf("%ld ", list[i].node);
 printf("\n");
 for(i=0; i<=N; i++)
   printf("%ld ",heap_pos[i]);
 printf("\n");
-
+*/
 heap c;
 for (k=N; k>=0; k--) {
   c=ExtractMin(list,heap_pos,k);
+//  printf("%ld \n",c.node);
   D[c.node]=c.key;
   // for all nodes starting from c.node
   temp=adj_list[c.node];
   while(temp!=NULL) {
     if (D[c.node]+temp->dist < D[temp->end]) { 
         list[heap_pos[temp->end]].key = D[c.node]+temp->dist;
-//      DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
+   //   DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
       }
     temp=temp->next;    
   }// for (i=0; i<=N; i++) printf("%ld %ld \n", list[i].node,list[i].key);
    // printf("\n\n");
      
 }
-
+//for (i=0; i<=N; i++) printf("%ld ",D[i]);
 free(D);
 for (i=0; i<=N; i++)
  free(adj_list[i]);
@@ -171,12 +172,13 @@ list[a]=temp;
 }
 
 void DecreaseKey (heap * list,long *heap_pos, long i) {
-long int k;
+long int k,l;
 
 k=list[i].key;
 while ((((i-1)/2) >= 0) && ( k < list[(i-1)/2].key)){
   swap(list,i,((i-1)/2));
-  swap_int(heap_pos,i,(i-1)/2);
+  l=list[(i-1)/2].node;
+  swap_int(heap_pos,i,l);
   i=(i-1)/2;
  }
 }
@@ -184,12 +186,14 @@ while ((((i-1)/2) >= 0) && ( k < list[(i-1)/2].key)){
 
 void IncreaseKey(heap * list,long * heap_pos, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
 heap c;
+long l;
 while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
   if (list[2*i+1].key <= list[2*i+2].key) { 
     c=list[2*i+1];
     if (c.key < list[i].key) {
     swap(list,i,2*i+1);
-    swap_int(heap_pos,i,2*i+1);
+    l=list[2*i+1].node;
+    swap_int(heap_pos,i,l);
     i=2*i+1;
    } else break;
   }
@@ -198,7 +202,8 @@ while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
     c=list[2*i+2];
     if (c.key < list[i].key) {
     swap(list,i,(2*i+2));
-    swap_int(heap_pos, i, 2*i+2);
+    l=list[2*i+2].node;
+    swap_int(heap_pos, i, l);
     i=2*i+2;
      } else break;
     }
