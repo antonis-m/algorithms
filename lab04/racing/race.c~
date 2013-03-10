@@ -270,8 +270,8 @@ void quicksort (long * list, long int m, long int n) {
 long int key,i,j,k;
    if( m < n)
    {
-      k = choose_pivot(m,n);
-      swap_quick(&list[m],&list[k]);
+      k = ch_pivot(m,n);
+      swap(&list[m],&list[k]);
       key = list[m];
       i = m+1;
       j = n;
@@ -282,10 +282,10 @@ long int key,i,j,k;
          while((j >= m) && (list[j] > key))
                 j--;
         if( i < j)
-                swap_quick(&list[i],&list[j]);
+                swap(&list[i],&list[j]);
       }
       // swap two elements
-      swap_quick(&list[m],&list[j]);
+      swap(&list[m],&list[j]);
       // recursively sort the lesser list
       quicksort(list,m,j-1);
       quicksort(list,j+1,n);
@@ -294,10 +294,4 @@ long int key,i,j,k;
 }
 
 
-void swap_quick (long * x, long * y) {
-long  temp;
-   temp = *x;
-   *x = *y;
-   *y = temp;
 
-}
