@@ -122,28 +122,35 @@ for (k=0; k<=N; k++) {
 for(i=0; i<=N; i++) D[i]=INF;
 for(i=0; i<B; i++) D[gas[i]]=0;
 D[0]=0;
-/*for(i=0; i<=N; i++)
+
+
+heap c;
+for (k=N; k>=0; k--) {
+for(i=0; i<=N; i++)
   printf("%ld ", list[i].node);
 printf("\n");
 for(i=0; i<=N; i++)
   printf("%ld ",heap_pos[i]);
 printf("\n");
-*/
-heap c;
-for (k=N; k>=0; k--) {
-  c=ExtractMin(list,heap_pos,k);
-//  printf("%ld \n",c.node);
+printf("\n\n");
+ 
+ c=ExtractMin(list,heap_pos,k);
+
+  printf("Just extracted \n");
+  for (i=0; i<=N; i++) printf("%ld    %ld    %ld    %ld \n",list[i].node,list[i].key,i,heap_pos[i]);
+  printf("\n\n");
+
   D[c.node]=c.key;
   // for all nodes starting from c.node
   temp=adj_list[c.node];
   while(temp!=NULL) {
     if (D[c.node]+temp->dist < D[temp->end]) { 
         list[heap_pos[temp->end]].key = D[c.node]+temp->dist;
-   //   DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
+//      DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
       }
     temp=temp->next;    
-  }// for (i=0; i<=N; i++) printf("%ld %ld \n", list[i].node,list[i].key);
-   // printf("\n\n");
+  } printf( "same round after controls \n"); for (i=0; i<=N; i++) printf("%ld %ld %ld %ld\n", list[i].node,list[i].key,i,heap_pos[i]);
+    printf("\n\n");
      
 }
 //for (i=0; i<=N; i++) printf("%ld ",D[i]);
@@ -175,25 +182,26 @@ void DecreaseKey (heap * list,long *heap_pos, long i) {
 long int k,l;
 
 k=list[i].key;
-while ((((i-1)/2) >= 0) && ( k < list[(i-1)/2].key)){
-  swap(list,i,((i-1)/2));
-  l=list[(i-1)/2].node;
+while ((((i/*-1*/)/2) >= 0) && ( k < list[(i/*-1*/)/2].key)){
+  swap(list,i,((i/*-1*/)/2));
+  l=list[(i/*-1*/)/2].node;
   swap_int(heap_pos,i,l);
-  i=(i-1)/2;
+  i=(i/*-1*/)/2;
  }
 }
 
 
 void IncreaseKey(heap * list,long * heap_pos, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
 heap c;
-long l;
+long l,m;
 while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
   if (list[2*i+1].key <= list[2*i+2].key) { 
     c=list[2*i+1];
     if (c.key < list[i].key) {
     swap(list,i,2*i+1);
+    m=list[i].node;
     l=list[2*i+1].node;
-    swap_int(heap_pos,i,l);
+    swap_int(heap_pos,m,l);
     i=2*i+1;
    } else break;
   }
@@ -202,8 +210,9 @@ while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
     c=list[2*i+2];
     if (c.key < list[i].key) {
     swap(list,i,(2*i+2));
+    m=list[i].node;
     l=list[2*i+2].node;
-    swap_int(heap_pos, i, l);
+    swap_int(heap_pos, m, l);
     i=2*i+2;
      } else break;
     }
@@ -213,12 +222,13 @@ while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
 
 heap ExtractMin(heap * list,long * heap_pos, long long n) {   //n to megethos tis enapomeinousas listas
   heap c;
-  long i;
+  long i,m;
   c.node=list[0].node;
   c.key=list[0].key;
   i=list[n].node;
+  m=list[0].node;
   swap(list,0,n);  
-  swap_int(heap_pos,0,i); ////
+  swap_int(heap_pos,m,i); ////
 
   list[n].key=INF+1000;
 //  for (i=0; i<=n; i++) printf("%ld %ld ",list[i].node, heap_pos[i]);
