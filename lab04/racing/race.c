@@ -126,34 +126,35 @@ D[0]=0;
 
 heap c;
 for (k=N; k>=0; k--) {
-for(i=0; i<=N; i++)
+/*for(i=0; i<=N; i++)
   printf("%ld ", list[i].node);
 printf("\n");
 for(i=0; i<=N; i++)
   printf("%ld ",heap_pos[i]);
 printf("\n");
 printf("\n\n");
- 
+ */
  c=ExtractMin(list,heap_pos,k);
 
-  printf("Just extracted \n");
+/*  printf("Just extracted \n");
   for (i=0; i<=N; i++) printf("%ld    %ld    %ld    %ld \n",list[i].node,list[i].key,i,heap_pos[i]);
   printf("\n\n");
-
+*/
   D[c.node]=c.key;
   // for all nodes starting from c.node
   temp=adj_list[c.node];
   while(temp!=NULL) {
     if (D[c.node]+temp->dist < D[temp->end]) { 
+        D[temp->end]=D[c.node]+temp->dist;
         list[heap_pos[temp->end]].key = D[c.node]+temp->dist;
-//      DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
+        DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
       }
     temp=temp->next;    
-  } printf( "same round after controls \n"); for (i=0; i<=N; i++) printf("%ld %ld %ld %ld\n", list[i].node,list[i].key,i,heap_pos[i]);
-    printf("\n\n");
+  }// printf( "same round after controls \n"); for (i=0; i<=N; i++) printf("%ld %ld %ld %ld\n", list[i].node,list[i].key,i,heap_pos[i]);
+   // printf("\n\n");
      
 }
-//for (i=0; i<=N; i++) printf("%ld ",D[i]);
+for (i=0; i<=N; i++) printf("%ld ",D[i]);
 free(D);
 for (i=0; i<=N; i++)
  free(adj_list[i]);
@@ -179,14 +180,15 @@ list[a]=temp;
 }
 
 void DecreaseKey (heap * list,long *heap_pos, long i) {
-long int k,l;
+long int k,l,m;
 
 k=list[i].key;
-while ((((i/*-1*/)/2) >= 0) && ( k < list[(i/*-1*/)/2].key)){
-  swap(list,i,((i/*-1*/)/2));
-  l=list[(i/*-1*/)/2].node;
-  swap_int(heap_pos,i,l);
-  i=(i/*-1*/)/2;
+while ((((i-1)/2) >= 0) && ( k < list[(i-1)/2].key)){
+  swap(list,i,((i-1)/2));
+  l=list[(i-1)/2].node;
+  m=list[i].node;
+  swap_int(heap_pos,m,l);
+  i=(i-1)/2;
  }
 }
 
