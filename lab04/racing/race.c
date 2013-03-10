@@ -49,7 +49,7 @@ long int * nodes;
 heap * list;
 long int * heap_pos;
 struct linked ** adj_list;
-long int * D;
+long int * D, * Q;
 
 scanf("%lld %lld %lld %lld %lld",&N,&M,&K,&L,&B);
 array=(edge *)calloc(M,sizeof(edge));
@@ -58,9 +58,10 @@ gas=(long int *)calloc(B, sizeof(long int ));
 list=(heap *)calloc(N+1,sizeof(heap));
 nodes=(long int *)calloc(N,sizeof(long int));
 D=(long *)malloc((N+1)*sizeof(long int));
+Q=(long *)malloc((N-2)*sizeof(long int));
 
 adj_list=(struct linked **)malloc((N+1)*sizeof(struct linked *));
-struct linked * temp;
+struct linked * temp, * temp2;
 for(i=0; i<=N; i++)
   adj_list[i]=NULL;
 
@@ -79,15 +80,25 @@ for (i=0; i<N; i++)
 
 for(i=0; i<M; i++) {    //diavase kai vale ston pinaka lista
   temp=(struct linked *)malloc(sizeof(struct linked));
+  temp2=(struct linked *)malloc(sizeof(struct linked));
   temp->next=NULL;
   j=array[i].begin;
   temp->end=array[i].end;
   temp->dist=array[i].dist;
   temp->next=adj_list[j];
   adj_list[j]=temp;
+
+  temp2->next=NULL;
+  j=array[i].end;
+  temp2->end=array[i].begin;
+  temp2->dist=array[i].dist;
+  temp2->next=adj_list[j];
+  adj_list[j]=temp2;
 }
 
-
+// temp=adj_list[4];
+// while(temp!=NULL ){ printf("%ld ",temp->end); temp=temp->next;}
+//printf("\n");
 list[0].node=0;
 list[0].key=0;
   
@@ -129,20 +140,8 @@ D[0]=0;
 
 heap c;
 for (k=N; k>=0; k--) {
-/*for(i=0; i<=N; i++)
-  printf("%ld ", list[i].node);
-printf("\n");
-for(i=0; i<=N; i++)
-  printf("%ld ",heap_pos[i]);
-printf("\n");
-printf("\n\n");
- */
- c=ExtractMin(list,heap_pos,k);
 
-/*  printf("Just extracted \n");
-  for (i=0; i<=N; i++) printf("%ld    %ld    %ld    %ld \n",list[i].node,list[i].key,i,heap_pos[i]);
-  printf("\n\n");
-*/
+ c=ExtractMin(list,heap_pos,k);
   D[c.node]=c.key;
   // for all nodes starting from c.node
   temp=adj_list[c.node];
@@ -157,13 +156,55 @@ printf("\n\n");
    // printf("\n\n");
      
 }
-//for (i=0; i<=N; i++) printf("%ld ",D[i]);
+
+//find cost of track
+i=0;j=1;
+long m,l,sum;
+sum=0; 
+while (j<K) {
+  m=track[i]; l=track[j];
+  temp=adj_list[m];
+  while((temp!=NULL)) {
+    if (temp->end == l) 
+      break;
+    else
+      temp=temp->next;
+  }
+    sum+= temp->dist;
+
+i++; j++; }
+printf("%ld \n", sum);
+
+m=track[0];
+l=track[K-1];
+
+for (i=2; i<N; i++)  
+ Q[i-2]=D[i];
+
+for (i=0; i<N-2; i++)
+ printf("%ld ", Q[i]);
+printf("\n");
+quicksort(Q,0,N-2);
+for (i=0;i<N-2; i++) printf("%ld ",Q[i]);
 free(D);
+free(Q);
 for (i=0; i<=N; i++)
  free(adj_list[i]);
 free(adj_list); free(heap_pos); free(array); free(track); free(gas); free(list);
 return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void swap_int(long * list, long a ,long b) {
@@ -199,7 +240,7 @@ while ((((i-1)/2) >= 0) && ( k < list[(i-1)/2].key)){
 void IncreaseKey(heap * list,long * heap_pos, long i,long long N) {   // to i antistoixei sto x tou paradeigmatos
 heap c;
 long l,m;
-while ((2*i+1 <= N) || (2*i+2 <=N)) {    //den eimai toso sigouros gi afto to &&
+while ((2*i+1 <= N) || (2*i+2 <=N)) { 
   if (list[2*i+1].key <= list[2*i+2].key) { 
     c=list[2*i+1];
     if (c.key < list[i].key) {
