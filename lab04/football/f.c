@@ -30,14 +30,35 @@ return -1;
 }
 
 int main () {
-long N;
+long N,i,j,k,l;
+struct node * temp;
 N=readLong();
 struct node ** array;
-array= (struct node **)malloc(N*sizeof(struct node));
+array= (struct node **)calloc(N+1,sizeof(struct node));
+for(i=0; i<=N; i++)
+  array[i]=NULL;
+
+for (i=1; i<=N; i++) {   //diavazw input
+  j=readLong();
+  for (k=0; k<j; k++) {
+    temp=(struct node *)malloc(sizeof(struct node));
+    l=readLong();
+    temp->pos=l;
+    temp->next=array[i];
+    array[i]=temp;
+  } 
+}
 
 
 
 
+
+
+
+
+free(temp);
+for(i=0; i<=N; i++)
+  free(array[i]);
 free(array);
 return 0;
 }
