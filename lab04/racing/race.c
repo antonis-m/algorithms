@@ -58,7 +58,7 @@ gas=(long int *)calloc(B, sizeof(long int ));
 list=(heap *)calloc(N+1,sizeof(heap));
 nodes=(long int *)calloc(N,sizeof(long int));
 D=(long *)malloc((N+1)*sizeof(long int));
-Q=(long *)malloc((N-2)*sizeof(long int));
+Q=(long *)calloc((K-2),sizeof(long int));
 
 adj_list=(struct linked **)malloc((N+1)*sizeof(struct linked *));
 struct linked * temp, * temp2;
@@ -173,19 +173,23 @@ while (j<K) {
     sum+= temp->dist;
 
 i++; j++; }
-printf("%ld \n", sum);
+//printf("%ld \n", sum);
+
 
 m=track[0];
 l=track[K-1];
-
-for (i=2; i<N; i++)  
- Q[i-2]=D[i];
-
-for (i=0; i<N-2; i++)
- printf("%ld ", Q[i]);
-printf("\n");
-quicksort(Q,0,N-2);
-for (i=0;i<N-2; i++) printf("%ld ",Q[i]);
+for (i=1; i<K-1; i++){
+ Q[i-1]=D[track[i]];
+// printf("%ld ", D[track[i]]);
+}
+//printf("\n");
+//for (i=0; i<K-2; i++)
+// printf("%ld ", Q[i]);
+//printf("\n");
+quicksort(Q,0,K-3);
+for (i=0;i<L; i++) 
+  sum+= Q[i];
+printf("%ld\n",sum);
 free(D);
 free(Q);
 for (i=0; i<=N; i++)
@@ -277,8 +281,6 @@ heap ExtractMin(heap * list,long * heap_pos, long long n) {   //n to megethos ti
   swap_int(heap_pos,m,i); ////
 
   list[n].key=INF+1000;
-//  for (i=0; i<=n; i++) printf("%ld %ld ",list[i].node, heap_pos[i]);
-//  printf("\n");
   IncreaseKey(list,heap_pos, 0, n);
   return c;
 }  
