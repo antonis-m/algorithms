@@ -1,5 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define BSIZE 1<<15
+
+typedef struct node {
+   long pos;
+   struct node * next;
+};
+
 
 char buffer[BSIZE];
 long bpos = 0L, bsize = 0L;
@@ -23,8 +30,14 @@ return -1;
 }
 
 int main () {
+long N;
+N=readLong();
+struct node ** array;
+array= (struct node **)malloc(N*sizeof(struct node));
 
 
 
+
+free(array);
 return 0;
 }
