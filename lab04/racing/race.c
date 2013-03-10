@@ -1,3 +1,4 @@
+/* Το πρόγραμμα περιλαμβάνει καλή υλοποίηση Dijkstra με binary heap*/
 #include <stdio.h>
 #include <stdlib.h>
 #define BSIZE 1<<15
@@ -96,9 +97,6 @@ for(i=0; i<M; i++) {    //diavase kai vale ston pinaka lista
   adj_list[j]=temp2;
 }
 
-// temp=adj_list[4];
-// while(temp!=NULL ){ printf("%ld ",temp->end); temp=temp->next;}
-//printf("\n");
 list[0].node=0;
 list[0].key=0;
   
@@ -152,8 +150,7 @@ for (k=N; k>=0; k--) {
         DecreaseKey(list,heap_pos,heap_pos[temp->end]); 
       }
     temp=temp->next;    
-  }// printf( "same round after controls \n"); for (i=0; i<=N; i++) printf("%ld %ld %ld %ld\n", list[i].node,list[i].key,i,heap_pos[i]);
-   // printf("\n\n");
+  }
      
 }
 
@@ -180,12 +177,7 @@ m=track[0];
 l=track[K-1];
 for (i=1; i<K-1; i++){
  Q[i-1]=D[track[i]];
-// printf("%ld ", D[track[i]]);
 }
-//printf("\n");
-//for (i=0; i<K-2; i++)
-// printf("%ld ", Q[i]);
-//printf("\n");
 quicksort(Q,0,K-3);
 for (i=0;i<L; i++) 
   sum+= Q[i];
@@ -197,18 +189,6 @@ for (i=0; i<=N; i++)
 free(adj_list); free(heap_pos); free(array); free(track); free(gas); free(list);
 return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 void swap_int(long * list, long a ,long b) {
